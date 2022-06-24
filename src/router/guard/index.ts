@@ -16,7 +16,7 @@ function createPageGuard(router: Router) {
 
   router.beforeEach(async (to) => {
     if (to.meta.title) {
-      document.title = import.meta.env.VITE_APP_NAME + ' - ' + to.meta.title;
+      document.title = import.meta.env.VITE_APP_TITLE + ' - ' + to.meta.title;
     }
     to.meta.loaded = !!loadedPageMap.get(to.path);
 

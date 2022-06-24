@@ -1,6 +1,6 @@
 <template>
   <div class="error-page">
-    <img class="error-img" src="@/assets/exception-404.png" />
+    <img class="error-img" src="@/assets/images/exception-404.png" />
     <p class="tip">请检查您输入的网址是否正确，或单击下面的按钮返回首页</p>
     <Button type="primary" @click="goHome">返回首页</Button>
   </div>

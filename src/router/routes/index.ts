@@ -1,6 +1,6 @@
 import { PAGE_NOT_FOUND_NAME, REDIRECT_NAME, LAYOUT } from '@/router/constant';
 import { PageEnum } from '@/enums/appEnum';
-import type { AppRouteRecordRaw } from '@/types/vue-router';
+import type { AppRouteRecordRaw } from '#/vue-router';
 
 const modules = import.meta.globEager('./modules/**/*.ts');
 
@@ -21,7 +21,7 @@ export const RootRoute: AppRouteRecordRaw = {
 export const LoginRoute: AppRouteRecordRaw = {
   path: '/login',
   name: 'Login',
-  component: () => import('@/views/Login.vue'),
+  component: () => import('@/views/sys/login/Login.vue'),
   meta: {
     title: '登录',
   },

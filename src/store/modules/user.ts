@@ -1,5 +1,5 @@
-import type { Menu, UserInfo } from '@/types/store';
-import type { AppRouteRecordRaw } from '@/types/vue-router';
+import type { Menu, UserInfo } from '#/store';
+import type { AppRouteRecordRaw } from '#/vue-router';
 import type { RouteRecordName, RouteRecordRaw } from 'vue-router';
 
 import Router, { resetRouter } from '@/router';
@@ -14,9 +14,15 @@ import { message as Message } from 'ant-design-vue';
 /**
  * 通过menu.url判断是否拥有菜单权限
  */
-function findRouteMenu(menuList: Menu[], route: AppRouteRecordRaw, basePath: string): Menu | undefined {
+function findRouteMenu(
+  menuList: Menu[],
+  route: AppRouteRecordRaw,
+  basePath: string,
+): Menu | undefined {
   if (menuList == null || route == null) return;
-  const fullpath = (basePath === '/' || route.path.startsWith('/') ? route.path : basePath + route.path).toLowerCase();
+  const fullpath = (
+    basePath === '/' || route.path.startsWith('/') ? route.path : basePath + route.path
+  ).toLowerCase();
 
   if (route.children && route.children.length) {
     // 父路由
@@ -40,12 +46,20 @@ function findRouteMenu(menuList: Menu[], route: AppRouteRecordRaw, basePath: str
 /**
  * 过滤路由
  */
-function filterAsyncRoutes(asyncRoutes: AppRouteRecordRaw[], menuList: Menu[], basePath = '/'): AppRouteRecordRaw[] {
+function filterAsyncRoutes(
+  asyncRoutes: AppRouteRecordRaw[],
+  menuList: Menu[],
+  basePath = '/',
+): AppRouteRecordRaw[] {
   return asyncRoutes.filter((route) => {
     let menu = findRouteMenu(menuList, route, basePath);
     if (menu) {
       if (route.children && route.children.length) {
-        route.children = filterAsyncRoutes(route.children, menuList, basePath + route.path) as RouteRecordRaw[];
+        route.children = filterAsyncRoutes(
+          route.children,
+          menuList,
+          basePath + route.path,
+        ) as RouteRecordRaw[];
         // 添加404
         route.children.push({
           ...NotFoundRoute,

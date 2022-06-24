@@ -1,11 +1,13 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import { Button, Input } from 'ant-design-vue';
-import 'ant-design-vue/dist/antd.less';
-import './design/index.less';
-
 import router from '@/router';
 import store from '@/store';
+
+import 'uno.css';
+import 'animate.css';
+import './design/index.less';
+import 'ant-design-vue/dist/antd.less';
 
 const app = createApp(App);
 app.use(router).use(store);

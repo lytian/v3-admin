@@ -1,3 +1,5 @@
+/// <reference types="vite-svg-loader" />
+
 declare interface Fn<T = any, R = T> {
   (...arg: T[]): R;
 }

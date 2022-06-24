@@ -1,6 +1,7 @@
-import type { Plugin } from 'vite';
 import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import Unocss from 'unocss/vite';
+import svgLoader from 'vite-svg-loader';
 import legacy from '@vitejs/plugin-legacy';
 import { resolve } from 'path';
 
@@ -11,7 +12,7 @@ function pathResolve(dir: string) {
 export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd());
   const isBuild = command == 'build';
-  const vitePlugins: Plugin[] = [
+  const vitePlugins = [
     {
       name: 'plugin-html-env',
       transformIndexHtml(html: string) {
@@ -20,8 +21,10 @@ export default defineConfig(({ command, mode }) => {
         });
       },
     },
-    // have to
     vue(),
+    Unocss(),
+    // svg组件化支持
+    svgLoader(),
   ];
 
   // @vitejs/plugin-legacy
@@ -43,7 +46,9 @@ export default defineConfig(({ command, mode }) => {
           target: env.VITE_PROXY_URL,
           changeOrigin: true,
           logLevel: env.VITE_PROXY_LOG_LEVEL,
-          rewrite: Boolean(env.VITE_PROXY_REWRITE) ? (path) => path.replace('/' + env.VITE_BASE_URL, '') : undefined,
+          rewrite: Boolean(env.VITE_PROXY_REWRITE)
+            ? (path) => path.replace('/' + env.VITE_BASE_URL, '')
+            : undefined,
         },
       },
     },
@@ -52,6 +57,10 @@ export default defineConfig(({ command, mode }) => {
         {
           find: /@\//,
           replacement: pathResolve('src') + '/',
+        },
+        {
+          find: /#\//,
+          replacement: pathResolve('types') + '/',
         },
       ],
     },

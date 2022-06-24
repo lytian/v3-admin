@@ -1,7 +1,9 @@
 import { ThemeModeEnum } from '@/enums/appEnum';
 
 /** BASE_URL转换成系统标志 */
-const SystemKey = import.meta.env.VITE_BASE_URL.toUpperCase().replaceAll('/', '').replaceAll('-', '_');
+const SystemKey = import.meta.env.VITE_APP_API_URL.toUpperCase()
+  .replaceAll('/', '')
+  .replaceAll('-', '_');
 
 /** sessionStorage */
 const KEY_TOKEN = 'AHF_' + SystemKey + '_TOKEN';

@@ -1,5 +1,5 @@
 <template>
-  <ConfigProvider componentSize="large">
+  <ConfigProvider componentSize="small">
     <RouterView />
   </ConfigProvider>
 </template>
