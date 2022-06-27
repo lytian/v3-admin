@@ -17,9 +17,19 @@
   </div>
 </template>
 <script lang="ts">
+import type { StyleValue } from 'vue';
 import { addResizeListener, removeResizeListener } from '@/utils/event';
 import { toObject } from './util';
-import { defineComponent, ref, onMounted, onBeforeUnmount, nextTick, provide, computed, unref } from 'vue';
+import {
+  defineComponent,
+  ref,
+  onMounted,
+  onBeforeUnmount,
+  nextTick,
+  provide,
+  computed,
+  unref,
+} from 'vue';
 import Bar from './bar';
 
 export default defineComponent({
@@ -30,10 +40,7 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
-    wrapStyle: {
-      type: [String, Array],
-      default: '',
-    },
+    wrapStyle: [String, Array],
     wrapClass: {
       type: [String, Array],
       default: '',
@@ -64,9 +71,9 @@ export default defineComponent({
 
     const style = computed(() => {
       if (Array.isArray(props.wrapStyle)) {
-        return toObject(props.wrapStyle);
+        return toObject(props.wrapStyle) as StyleValue;
       }
-      return props.wrapStyle;
+      return props.wrapStyle as StyleValue;
     });
 
     const handleScroll = () => {

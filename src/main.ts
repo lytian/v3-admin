@@ -6,7 +6,7 @@ import store from '@/store';
 
 import 'uno.css';
 import 'animate.css';
-import './design/index.less';
+import './style/index.less';
 import 'ant-design-vue/dist/antd.less';
 
 const app = createApp(App);

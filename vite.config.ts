@@ -69,8 +69,8 @@ export default defineConfig(({ command, mode }) => {
         less: {
           modifyVars: {
             hack: `true; @import (reference) "${pathResolve(
-              'src/design/color.less',
-            )}";@import (reference) "${pathResolve('src/design/var.less')}";`,
+              'src/style/color.less',
+            )}";@import (reference) "${pathResolve('src/style/var.less')}";`,
             'primary-color': '#1890ff',
             'link-color': '#1890ff',
             'success-color': '#52c41a',

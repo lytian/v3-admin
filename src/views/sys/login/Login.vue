@@ -2,24 +2,37 @@
   <div class="login-page">
     <component :is="illustrationSvg" class="illustration animate__animated animate__bounceIn" />
     <div class="login-box">
-      <img class="logo" src="@/assets/images/logo.png" />
-      <h2>{{ title }}</h2>
-      <Form class="p-4 enter-x" :model="formData" ref="formRef" @keypress.enter="handleLogin">
+      <img class="logo enter-x" src="@/assets/images/logo.png" />
+      <h2 class="title enter-x">{{ title }}</h2>
+      <Form :model="formData" ref="formRef" @keypress.enter="handleLogin">
         <Form.Item name="account" class="enter-x">
-          <Input
-            size="large"
-            v-model:value="formData.account"
-            placeholder="账户"
-            class="fix-auto-fill"
-          />
+          <Input v-model:value="formData.account" size="large" placeholder="登录账号">
+            <template #addonBefore>
+              <UserOutlined style="font-size: 1.25rem" />
+            </template>
+          </Input>
         </Form.Item>
         <Form.Item name="password" class="enter-x">
           <Input.Password
-            size="large"
-            visibilityToggle
             v-model:value="formData.password"
-            placeholder="密码"
-          />
+            visibilityToggle
+            size="large"
+            placeholder="登录密码"
+          >
+            <template #addonBefore>
+              <LockOutlined style="font-size: 1.25rem" />
+            </template>
+          </Input.Password>
+        </Form.Item>
+        <Form.Item name="code" class="enter-x">
+          <Input v-model:value="formData.code" size="large" placeholder="图形验证码">
+            <template #addonBefore>
+              <SafetyOutlined style="font-size: 1.25rem" />
+            </template>
+            <template #addonAfter>
+              <Captcha v-model:code="captchaCode" :height="38" />
+            </template>
+          </Input>
         </Form.Item>
 
         <Row class="enter-x">
@@ -39,30 +52,26 @@
           <Button type="primary" size="large" block @click="handleLogin" :loading="loading">
             登录
           </Button>
-          <!-- <Button size="large" class="mt-4 enter-x" block @click="handleRegister">
-        {{ t('sys.login.registerButton') }}
-      </Button> -->
         </Form.Item>
-        <Row class="enter-x">
+        <Row class="enter-x" :gutter="16">
           <Col :md="8" :xs="24">
-            <Button block> 手机登录 </Button>
-          </Col>
-          <Col :md="8" :xs="24" class="!my-2 !md:my-0 xs:mx-0 md:mx-2">
-            <Button block> 扫码登录 </Button>
+            <Button block size="middle"> 手机登录 </Button>
           </Col>
           <Col :md="8" :xs="24">
-            <Button block> 注册 </Button>
+            <Button block size="middle"> 扫码登录 </Button>
+          </Col>
+          <Col :md="8" :xs="24">
+            <Button block size="middle"> 注册 </Button>
           </Col>
         </Row>
 
-        <Divider class="enter-x">其他登录</Divider>
+        <Divider class="enter-x mt-10!">其他登录</Divider>
 
-        <div class="flex justify-evenly enter-x">
+        <div class="other-login enter-x">
           <GithubFilled />
           <WechatFilled />
           <AlipayCircleFilled />
           <GoogleCircleFilled />
-          <TwitterCircleFilled />
         </div>
       </Form>
     </div>
@@ -80,6 +89,16 @@ import illustration5 from '@/assets/svg/login-illustration5.svg?component';
 import illustration6 from '@/assets/svg/login-illustration6.svg?component';
 import { useGlobSetting } from '@/utils/setting';
 import { Checkbox, Form, Input, Button, Row, Col, Divider } from 'ant-design-vue';
+import {
+  UserOutlined,
+  LockOutlined,
+  SafetyOutlined,
+  GithubFilled,
+  WechatFilled,
+  AlipayCircleFilled,
+  GoogleCircleFilled,
+} from '@ant-design/icons-vue';
+import Captcha from '@/components/Captcha/index.vue';
 
 /* Show a different background every day */
 const illustrationSvg = computed(() => {
@@ -108,15 +127,17 @@ const formRef = ref();
 const loading = ref(false);
 const rememberMe = ref(false);
 
+const captchaCode = ref('');
 const formData = reactive({
   account: 'vben',
   password: '123456',
+  code: '',
 });
 
 async function handleLogin() {}
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 .login-page {
   position: relative;
   width: 100%;
@@ -136,6 +157,35 @@ async function handleLogin() {}
 
   .login-box {
     width: 360px;
+
+    .logo {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto;
+      display: block;
+    }
+
+    .title {
+      margin: 15px 0;
+      color: #999;
+      font: 700 200% Consolas, Monaco, monospace;
+      text-align: center;
+      margin-top: 0;
+    }
+
+    .ant-input-group-addon:last-child {
+      padding: 0;
+    }
+
+    .other-login {
+      display: flex;
+      justify-content: space-evenly;
+
+      .anticon {
+        font-size: 24px;
+        cursor: pointer;
+      }
+    }
   }
 }
 </style>
