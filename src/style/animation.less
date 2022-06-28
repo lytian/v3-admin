@@ -1,26 +1,17 @@
-@directions: x, y;
+@directions: {
+  up: translateY(-50px);
+  down: translateY(50px);
+  left: translateX(-75px);
+  right: translateX(75px);
+};
 each(@directions, {
-  * > .enter-@{value} {
-    transform: if(@value = x, translateX(50px), translateY(50px)) ;
+  * > .enter-@{key}  {
+    transform: @value;
     opacity: 0;
-    animation: e("enter-@{value}-animation") 0.4s ease-in-out 0.3s;
+    animation: e("enter-from-@{key}") 0.3s ease-in-out;
     animation-fill-mode: forwards;
 
-    each(range(7), {
-      &:nth-child(@{value}) {
-        animation-delay: @value * 100ms;
-        z-index: 10 - @value;
-      }
-    });
-  }
-
-  * > .-enter-@{value} {
-    transform: if(@value = x, translateX(-50px), translateY(-50px)) ;
-    opacity: 0;
-    animation: e("enter-@{value}-animation") 0.4s ease-in-out 0.3s;
-    animation-fill-mode: forwards;
-
-    each(range(7), {
+    each(range(10), {
       &:nth-child(@{value}) {
         animation-delay: @value * 100ms;
         z-index: 10 - @value;
@@ -29,15 +20,47 @@ each(@directions, {
   }
 });
 
-@keyframes enter-x-animation {
+@keyframes enter-from-up {
+  75% {
+    opacity: 1;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes enter-from-down {
+  75% {
+    opacity: 1;
+    transform: translateY(-5px);
+  }
+
   to {
     opacity: 1;
     transform: translateX(0);
   }
 }
-@keyframes enter-y-animation {
+@keyframes enter-from-left {
+  // 75% {
+  //   opacity: 1;
+  //   transform: translateX(10px);
+  // }
+
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0);
+  }
+}
+@keyframes enter-from-right {
+  // 75% {
+  //   opacity: 1;
+  //   transform: translateX(-10px);
+  // }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }

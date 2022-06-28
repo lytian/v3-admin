@@ -5,7 +5,6 @@ import router from '@/router';
 import store from '@/store';
 
 import 'uno.css';
-import 'animate.css';
 import './style/index.less';
 import 'ant-design-vue/dist/antd.less';
 
