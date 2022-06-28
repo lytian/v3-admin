@@ -1,5 +1,11 @@
 <template>
-  <Form ref="formRef" :model="formData" :rules="formRules" @keypress.enter="handleLogin">
+  <Form
+    ref="formRef"
+    :model="formData"
+    :rules="formRules"
+    class="mt-10!"
+    @keypress.enter="handleLogin"
+  >
     <Form.Item name="phone" :class="getLoginAnimation">
       <Input v-model:value="formData.phone" size="large" placeholder="手机号码" :maxlength="11">
         <template #addonBefore>
@@ -7,16 +13,21 @@
         </template>
       </Input>
     </Form.Item>
-    <Form.Item name="smsCode" :class="getLoginAnimation">
-      <Input v-model:value="formData.smsCode" size="large" placeholder="图形验证码" :maxlength="4">
-        <template #addonBefore>
-          <SafetyOutlined style="font-size: 1.25rem" />
-        </template>
-        <template #addonAfter>
-          <Captcha v-model:code="captchaCode" :height="38" />
-        </template>
-      </Input>
-    </Form.Item>
+    <div class="flex" :class="getLoginAnimation">
+      <Form.Item name="smsCode">
+        <Input
+          v-model:value="formData.smsCode"
+          size="large"
+          placeholder="短信验证码"
+          :maxlength="4"
+        >
+          <template #addonBefore>
+            <SafetyOutlined style="font-size: 1.25rem" />
+          </template>
+        </Input>
+      </Form.Item>
+      <Button size="large" class="flex-shrink ml-4">发送短信</Button>
+    </div>
 
     <Form.Item :class="getLoginAnimation">
       <Button type="primary" size="large" block @click="handleLogin" :loading="loading">
@@ -35,13 +46,10 @@ import type { Rule } from 'ant-design-vue/lib/form/interface';
 import { ref, reactive } from 'vue';
 import { Form, Input, Button, message as Message } from 'ant-design-vue';
 import { PhoneOutlined, SafetyOutlined } from '@ant-design/icons-vue';
-import Captcha from '@/components/Captcha/index.vue';
 import { useLoginState, getLoginAnimation } from '../useLogin';
 
 const formRef = ref<FormInstance>();
 const loading = ref(false);
-
-const captchaCode = ref('');
 const formData = reactive({
   phone: '',
   smsCode: '',

@@ -24,4 +24,4 @@ export function useLoginState() {
   return { setLoginState, getLoginState, handleBackLogin };
 }
 
-export const getLoginAnimation = computed(() => 'enter-right');
+export const getLoginAnimation = computed(() => 'enter-left');
