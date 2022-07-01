@@ -8,6 +8,7 @@
       <LoginForm v-if="getLoginState === LoginStateEnum.LOGIN" />
       <PhoneForm v-else-if="getLoginState === LoginStateEnum.PHONE" />
       <QrCodeForm v-else-if="getLoginState === LoginStateEnum.QR_CODE" />
+      <RegisterForm v-else-if="getLoginState === LoginStateEnum.REGISTER" />
     </div>
   </div>
 </template>
@@ -26,6 +27,7 @@ import { LoginStateEnum, useLoginState, getLoginAnimation } from './useLogin';
 import LoginForm from './components/LoginForm.vue';
 import PhoneForm from './components/PhoneForm.vue';
 import QrCodeForm from './components/QrCodeForm.vue';
+import RegisterForm from './components/RegisterForm.vue';
 
 /* Show a different background every day */
 const illustrationSvg = computed(() => {
