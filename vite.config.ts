@@ -1,56 +1,37 @@
 import { defineConfig, loadEnv } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import Unocss from 'unocss/vite';
-import svgLoader from 'vite-svg-loader';
-import legacy from '@vitejs/plugin-legacy';
+import dayjs from 'dayjs';
 import { resolve } from 'path';
+import { createProxy, generateModifyVars, wrapperEnv } from './build/utils';
+import { createVitePlugins } from './build/plugins';
+import pkg from './package.json';
 
 function pathResolve(dir: string) {
   return resolve(process.cwd(), '.', dir);
 }
 
+const { dependencies, devDependencies, name, version } = pkg;
+const __APP_INFO__ = {
+  pkg: { dependencies, devDependencies, name, version },
+  lastBuildTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+};
+
 export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd());
-  const isBuild = command == 'build';
-  const vitePlugins = [
-    {
-      name: 'plugin-html-env',
-      transformIndexHtml(html: string) {
-        return html.replace(/<%=\s+(\w+)\s+%>/g, (_match, key) => {
-          return `${env[key]}`;
-        });
-      },
-    },
-    vue(),
-    Unocss(),
-    // svg组件化支持
-    svgLoader(),
-  ];
 
-  // @vitejs/plugin-legacy
-  if (Boolean(env.VITE_LEGACY) && isBuild) {
-    vitePlugins.push(
-      legacy({
-        targets: ['ie >= 10'],
-        additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
-      }),
-    );
-  }
+  // The boolean type read by loadEnv is a string. This function can be converted to boolean type
+  const viteEnv = wrapperEnv(env);
+
+  const { VITE_PORT, VITE_PUBLIC_PATH, VITE_PROXY, VITE_DROP_CONSOLE } = viteEnv;
+
+  const isBuild = command == 'build';
 
   return {
+    base: VITE_PUBLIC_PATH,
     server: {
-      // host: true,
-      port: Number(env.VITE_PROXY_PORT) || 3000,
-      proxy: {
-        ['^/' + env.VITE_BASE_URL]: {
-          target: env.VITE_PROXY_URL,
-          changeOrigin: true,
-          logLevel: env.VITE_PROXY_LOG_LEVEL,
-          rewrite: Boolean(env.VITE_PROXY_REWRITE)
-            ? (path) => path.replace('/' + env.VITE_BASE_URL, '')
-            : undefined,
-        },
-      },
+      host: true,
+      port: VITE_PORT,
+      // Load proxy configuration from .env
+      proxy: createProxy(VITE_PROXY),
     },
     resolve: {
       alias: [
@@ -64,38 +45,26 @@ export default defineConfig(({ command, mode }) => {
         },
       ],
     },
+    define: {
+      __APP_INFO__: JSON.stringify(__APP_INFO__),
+    },
     css: {
       preprocessorOptions: {
         less: {
-          modifyVars: {
-            hack: `true; @import (reference) "${pathResolve(
-              'src/style/color.less',
-            )}";@import (reference) "${pathResolve('src/style/var.less')}";`,
-            'primary-color': '#1890ff',
-            'link-color': '#1890ff',
-            'success-color': '#52c41a',
-            'warning-color': '#faad14',
-            'error-color': '#f5222d',
-            'heading-color': 'rgba(0, 0, 0, 0.85)',
-            'text-color': 'rgba(0, 0, 0, 0.65)',
-            'text-color-secondary': 'rgba(0, 0, 0, 0.45)',
-            'disabled-color': 'rgba(0, 0, 0, 0.25)',
-            'border-radius-base': '4px',
-            'border-color-base': '#d9d9d9',
-            'box-shadow-base': '0 2px 8px rgba(0, 0, 0, 0.15)',
-          },
+          modifyVars: generateModifyVars(),
           javascriptEnabled: true,
         },
       },
     },
-    plugins: vitePlugins,
+    // The vite plugin used by the project. The quantity is large, so it is separately extracted and managed
+    plugins: createVitePlugins(viteEnv, isBuild),
     build: {
       target: 'es2015',
       minify: 'terser',
       terserOptions: {
         compress: {
           keep_infinity: true,
-          drop_console: Boolean(env.VITE_DROP_CONSOLE),
+          drop_console: VITE_DROP_CONSOLE,
         },
       },
       // Turning off brotliSize display can slightly reduce packaging time

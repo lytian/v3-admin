@@ -1,7 +1,7 @@
 <template>
-  <LayoutFooter class="layout-footer" v-if="getShowLayoutFooter" ref="footerRef">
+  <a-footer class="layout-footer" v-if="getShowLayoutFooter" ref="footerRef">
     Copyright &copy;2022 <a @click="openWindow('https://www.baidu.com')">Vincent</a>
-  </LayoutFooter>
+  </a-footer>
 </template>
 
 <script lang="ts">
@@ -13,7 +13,7 @@ import { useRouter } from 'vue-router';
 
 export default defineComponent({
   name: 'LayoutFooter',
-  components: { LayoutFooter: Layout.Footer },
+  components: { [Layout.Footer.name]: Layout.Footer },
   setup() {
     // const { getShowFooter } = useRootSetting();
     const { currentRoute } = useRouter();

@@ -1,4 +1,4 @@
-import type { AppRouteRecordRaw } from '@/types/vue-router';
+import type { AppRouteRecordRaw } from '#/vue-router';
 import { LAYOUT } from '@/router/constant';
 
 const dashboard: AppRouteRecordRaw = {
