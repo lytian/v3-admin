@@ -10,7 +10,9 @@ export function isReportMode(): boolean {
   return process.env.REPORT === 'true';
 }
 
-// Read all environment variable configuration files to process.env
+/**
+ * Read all environment variable configuration files to process.env
+ */
 export function wrapperEnv(envConf: Recordable): ViteEnv {
   const ret: any = {};
 
@@ -43,6 +45,7 @@ type ProxyItem = [string, string];
 type ProxyList = ProxyItem[];
 
 type ProxyTargetList = Record<string, ProxyOptions>;
+
 /**
  * Generate proxy
  * Used to parse the .env.development proxy configuration

@@ -10,7 +10,7 @@ export enum AppDeviceEnum {
 }
 
 /** 系统主题 */
-export enum ThemeModeEnum {
+export enum ThemeEnum {
   DARK = 'dark',
   LIGHT = 'light',
 }
@@ -28,12 +28,6 @@ export enum ContentEnum {
   FULL = 'full',
   // fixed width
   FIXED = 'fixed',
-}
-
-// theme enum
-export enum ThemeEnum {
-  DARK = 'dark',
-  LIGHT = 'light',
 }
 
 export enum SettingButtonPositionEnum {

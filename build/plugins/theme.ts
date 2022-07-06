@@ -4,25 +4,16 @@
  */
 import type { Plugin } from 'vite';
 import path from 'path';
-import {
-  viteThemePlugin,
-  antdDarkThemePlugin,
-  mixLighten,
-  mixDarken,
-  tinycolor,
-} from 'vite-plugin-theme';
+import { viteThemePlugin, antdDarkThemePlugin } from 'vite-plugin-theme';
 import { getThemeColors, generateColors } from '../config/themeConfig';
 import { generateModifyVars } from '../utils';
 
 export function configThemePlugin(isBuild: boolean): Plugin[] {
-  const colors = generateColors({
-    mixDarken,
-    mixLighten,
-    tinycolor,
-  });
+  const colors = generateColors();
   const plugin = [
     viteThemePlugin({
       resolveSelector: (s) => {
+        s = s.trim();
         return s.startsWith('[data-theme') ? s : `[data-theme] ${s}`;
       },
       colorVariables: [...getThemeColors(), ...colors],

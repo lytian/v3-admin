@@ -2,6 +2,7 @@
   <div class="login-page">
     <component :is="illustrationSvg" class="illustration" />
     <div class="login-box">
+      <ThemeModeToggle />
       <img class="login-box__logo" :class="getLoginAnimation" src="@/assets/images/logo.png" />
       <h2 class="login-box__title" :class="getLoginAnimation">{{ title }}</h2>
 
@@ -25,6 +26,7 @@ import illustration5 from '@/assets/svg/login-illustration5.svg?component';
 import illustration6 from '@/assets/svg/login-illustration6.svg?component';
 import { useGlobSetting } from '@/utils/setting';
 import { LoginStateEnum, useLoginState, getLoginAnimation } from './useLogin';
+import ThemeModeToggle from '@/components/Application/ThemeToggle.vue';
 import LoginForm from './components/LoginForm.vue';
 import PhoneForm from './components/PhoneForm.vue';
 import QrCodeForm from './components/QrCodeForm.vue';

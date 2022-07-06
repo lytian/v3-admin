@@ -28,7 +28,7 @@ export default defineConfig(({ command, mode }) => {
   return {
     base: VITE_PUBLIC_PATH,
     server: {
-      host: true,
+      // host: true,
       port: VITE_PORT,
       // Load proxy configuration from .env
       proxy: createProxy(VITE_PROXY),
