@@ -3,7 +3,7 @@ import axios from 'axios';
 import { createVNode } from 'vue';
 import { Modal, message as Message } from 'ant-design-vue';
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
-import store from '@/store';
+// import store from '@/store';
 import { Token } from './storage';
 
 const instance = axios.create({
@@ -65,7 +65,7 @@ instance.interceptors.response.use(
         okText: '确认',
         cancelText: '取消',
         onOk: function () {
-          store.dispatch('user/resetToken');
+          // store.dispatch('user/resetToken');
           location.reload();
         },
       });
@@ -106,7 +106,7 @@ function logoutConfirm() {
     maskClosable: false,
     okText: '确定',
     onOk: function () {
-      store.dispatch('user/resetToken');
+      // store.dispatch('user/resetToken');
       location.reload();
     },
   });

@@ -20,11 +20,11 @@
     "@vueuse/core": "^8.7.5",
     "ant-design-vue": "^3.2.7",
     "axios": "^0.27.2",
+    "pinia": "^2.0.14",
     "qrcode": "^1.5.0",
     "resize-observer-polyfill": "^1.5.1",
     "vue": "^3.2.25",
-    "vue-router": "^4.0.16",
-    "vuex": "^4.0.2"
+    "vue-router": "^4.0.16"
   },
   "devDependencies": {
     "@types/node": "^17.0.42",
@@ -61,7 +61,6 @@
   },
   "browserslist": [
     ">1%",
-    "last 2 version",
-    "IE >= 10"
+    "last 2 version"
   ]
 }

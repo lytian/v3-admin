@@ -1,12 +1,5 @@
-import { createStore } from 'vuex';
+import { createPinia } from 'pinia';
 
-// const modulesFiles = import.meta.globEager('./modules/*.ts');
+const store = createPinia();
 
-const modules = {};
-// for (const key in modulesFiles) {
-//   modules[key.substring(key.lastIndexOf('/') + 1, key.lastIndexOf('.'))] = modulesFiles[key].default;
-// }
-
-export default createStore({
-  modules,
-});
+export default store;

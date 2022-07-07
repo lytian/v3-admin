@@ -1,13 +1,12 @@
 import type { Router, RouteLocationNormalized } from 'vue-router';
-import store from '@/store';
+import { unref } from 'vue';
+import { useAppStoreWithOut } from '@/store/modules/app';
 import { Token } from '@/utils/storage';
-import createPermissionGuard from './permissionGuard';
 
 export function setupRouterGuard(router: Router) {
   createPageGuard(router);
   createPageLoadingGuard(router);
   createScrollGuard(router);
-  createPermissionGuard(router);
 }
 
 /** 加载过的页面处理得更快  */
@@ -15,9 +14,9 @@ function createPageGuard(router: Router) {
   const loadedPageMap = new Map<string, boolean>();
 
   router.beforeEach(async (to) => {
-    if (to.meta.title) {
-      document.title = import.meta.env.VITE_APP_TITLE + ' - ' + to.meta.title;
-    }
+    // if (to.meta.title) {
+    //   document.title = import.meta.env.VITE_APP_TITLE + ' - ' + to.meta.title;
+    // }
     to.meta.loaded = !!loadedPageMap.get(to.path);
 
     return true;
@@ -30,6 +29,7 @@ function createPageGuard(router: Router) {
 
 // Used to handle page loading status
 function createPageLoadingGuard(router: Router) {
+  const { getPageLoading, setPageLoading, setPageLoadingAction } = useAppStoreWithOut();
   router.beforeEach((to) => {
     if (!Token.get()) {
       return true;
@@ -38,15 +38,15 @@ function createPageLoadingGuard(router: Router) {
       return true;
     }
 
-    store.commit('app/setPageLoading', true);
+    setPageLoadingAction(true);
     return true;
   });
   router.afterEach(() => {
-    if (store.getters['app/pageLoading']) {
+    if (unref(getPageLoading)) {
       // TODO Looking for a better way
       // The timer simulates the loading time to prevent flashing too fast,
       setTimeout(() => {
-        store.commit('app/setPageLoading', false);
+        setPageLoading(false);
       }, 220);
     }
     return true;

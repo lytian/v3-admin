@@ -1,79 +1,56 @@
-import { MixSideStatus, SiderStatus, ThemeMode } from '@/utils/storage';
-import { AppDeviceEnum, ThemeModeEnum } from '@/enums/appEnum';
+import { defineStore } from 'pinia';
+import store from '@/store';
+
+import { ThemeEnum } from '@/enums/appEnum';
+import { themeMode } from '@/settings/themeSetting';
+import { ThemeMode } from '@/utils/storage';
 
 interface AppState {
-  // 系统主题
-  themeMode?: ThemeModeEnum;
-  // 页面切换加载中
+  themeMode?: ThemeEnum;
+  // Page loading status
   pageLoading: boolean;
-  // 侧边栏是否收起
-  siderCollapsed: boolean;
-  // 混合侧边栏是否固定
-  mixSideFixed: boolean;
-  device: AppDeviceEnum;
 }
+let timeId: TimeoutHandle;
+export const useAppStore = defineStore({
+  id: 'app',
+  state: (): AppState => ({
+    themeMode: undefined,
+    pageLoading: false,
+  }),
+  getters: {
+    getPageLoading(): boolean {
+      return this.pageLoading;
+    },
+    getThemeMode(): 'light' | 'dark' | string {
+      return this.themeMode || ThemeMode.get() || themeMode;
+    },
+  },
+  actions: {
+    setPageLoading(loading: boolean): void {
+      this.pageLoading = loading;
+    },
 
-const state: AppState = {
-  themeMode: undefined,
-  pageLoading: false,
-  siderCollapsed: SiderStatus.get(),
-  mixSideFixed: MixSideStatus.get(),
-  device: AppDeviceEnum.DESKTOP,
-};
+    setThemeMode(mode: ThemeEnum): void {
+      this.themeMode = mode;
+      ThemeMode.set(mode);
+    },
 
-const getters = {
-  themeMode(state: AppState): ThemeModeEnum {
-    return state.themeMode || ThemeMode.get() || ThemeModeEnum.LIGHT;
+    async setPageLoadingAction(loading: boolean): Promise<void> {
+      if (loading) {
+        clearTimeout(timeId);
+        // Prevent flicker
+        timeId = setTimeout(() => {
+          this.setPageLoading(loading);
+        }, 50);
+      } else {
+        this.setPageLoading(loading);
+        clearTimeout(timeId);
+      }
+    },
   },
-  pageLoading(state: AppState): boolean {
-    return state.pageLoading;
-  },
-  siderCollapsed(state: AppState): boolean {
-    return state.siderCollapsed;
-  },
-  mixSideFixed(state: AppState): boolean {
-    return state.mixSideFixed;
-  },
-  isMobile(state: AppState): boolean {
-    return state.device == AppDeviceEnum.MODILE;
-  },
-};
+});
 
-const mutations = {
-  setThemeMode: (state: AppState, mode: ThemeModeEnum) => {
-    state.themeMode = mode;
-    ThemeMode.set(mode);
-  },
-  toggleSidebar: (state: AppState) => {
-    state.siderCollapsed = !state.siderCollapsed;
-    if (state.siderCollapsed) {
-      SiderStatus.set(1);
-    } else {
-      SiderStatus.set(0);
-    }
-  },
-  setMixSideFixed: (state, fixed: boolean) => {
-    state.mixSideFixed = fixed;
-    if (state.mixSideFixed) {
-      MixSideStatus.set(1);
-    } else {
-      MixSideStatus.set(0);
-    }
-  },
-  toggleDevice: (state, device: AppDeviceEnum) => {
-    state.device = device;
-  },
-  setPageLoading: (state, loading: boolean) => {
-    state.pageLoading = loading;
-  },
-};
-
-const actions = {};
-
-export default {
-  namespaced: true,
-  state,
-  getters,
-  mutations,
-  actions,
-};
+// Need to be used outside the setup
+export function useAppStoreWithOut() {
+  return useAppStore(store);
+}

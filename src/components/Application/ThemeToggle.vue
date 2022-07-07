@@ -6,9 +6,12 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, unref, computed } from 'vue';
 import SunIcon from '@/assets/svg/sun.svg?component';
 import MoonIcon from '@/assets/svg/moon.svg?component';
+import { useAppStore } from '@/store/modules/app';
+import { ThemeEnum } from '@/enums/appEnum';
+import { changeThemeMode } from '@/settings/themeSetting';
 
 export default defineComponent({
   name: 'ThemeToggle',
@@ -17,10 +20,13 @@ export default defineComponent({
     MoonIcon,
   },
   setup() {
-    const isDark = ref(false);
+    const appStore = useAppStore();
+    const isDark = computed(() => appStore.getThemeMode === ThemeEnum.DARK);
 
     function toggleThemeMode() {
-      isDark.value = !isDark.value;
+      const darkMode = unref(isDark) ? ThemeEnum.LIGHT : ThemeEnum.DARK;
+      appStore.setThemeMode(darkMode);
+      changeThemeMode(darkMode);
     }
     return {
       isDark,
