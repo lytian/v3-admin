@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import store from '@/store';
 
 import { ThemeEnum } from '@/enums/appEnum';
-import { themeMode } from '@/settings/themeSetting';
+import { themeMode } from '@/settings/modules/themeSetting';
 import { ThemeMode } from '@/utils/storage';
 
 interface AppState {

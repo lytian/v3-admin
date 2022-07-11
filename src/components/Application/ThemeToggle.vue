@@ -11,7 +11,7 @@ import SunIcon from '@/assets/svg/sun.svg?component';
 import MoonIcon from '@/assets/svg/moon.svg?component';
 import { useAppStore } from '@/store/modules/app';
 import { ThemeEnum } from '@/enums/appEnum';
-import { changeThemeMode } from '@/settings/themeSetting';
+import { changeThemeMode } from '@/settings/modules/themeSetting';
 
 export default defineComponent({
   name: 'ThemeToggle',

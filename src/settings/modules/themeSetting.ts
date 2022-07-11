@@ -1,7 +1,7 @@
 import { ThemeEnum } from '@/enums/appEnum';
 
 import { addClass, hasClass, removeClass } from '@/utils/dom';
-import { getThemeColors, generateColors } from '../../build/config/themeConfig';
+import { getThemeColors, generateColors } from '../../../build/config/themeConfig';
 import { mixLighten, mixDarken, tinycolor } from 'vite-plugin-theme/es/colorUtils';
 import {
   darkCssIsReady,
@@ -14,7 +14,7 @@ export const themeMode = ThemeEnum.LIGHT;
 /**
  * 更换主题模式
  */
-export async function changeThemeMode(mode: ThemeEnum = ThemeEnum.LIGHT) {
+export async function changeThemeMode(mode: string | null = 'light') {
   const htmlRoot = document.documentElement;
   const hasDarkClass = hasClass(htmlRoot, 'dark');
   if (mode === 'dark') {

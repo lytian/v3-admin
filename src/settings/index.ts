@@ -1,6 +1,10 @@
 import type { GlobConfig } from '#/config';
+
+import { changeThemeMode } from './modules/themeSetting';
+import { useAppStore } from '@/store/modules/app';
 import { warn } from '@/utils/log';
 
+// Env全局配置
 export const useGlobSetting = (): Readonly<GlobConfig> => {
   const {
     VITE_APP_TITLE,
@@ -26,3 +30,12 @@ export const useGlobSetting = (): Readonly<GlobConfig> => {
   };
   return glob as Readonly<GlobConfig>;
 };
+
+// 初始化项目配置
+export function initAppConfigStore() {
+  const appStore = useAppStore();
+  const themeMode = appStore.getThemeMode;
+
+  // init dark mode
+  changeThemeMode(themeMode);
+}
