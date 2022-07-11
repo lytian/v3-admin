@@ -24,7 +24,6 @@ import illustration3 from '@/assets/svg/login-illustration3.svg?component';
 import illustration4 from '@/assets/svg/login-illustration4.svg?component';
 import illustration5 from '@/assets/svg/login-illustration5.svg?component';
 import illustration6 from '@/assets/svg/login-illustration6.svg?component';
-import { useGlobSetting } from '@/settings/index';
 import { LoginStateEnum, useLoginState, getLoginAnimation } from './useLogin';
 import ThemeModeToggle from '@/components/Application/ThemeToggle.vue';
 import LoginForm from './components/LoginForm.vue';
@@ -55,7 +54,7 @@ const illustrationSvg = computed(() => {
   }
 });
 
-const { title } = useGlobSetting();
+const title = import.meta.env.VITE_APP_TITLE;
 const { getLoginState } = useLoginState();
 </script>
 

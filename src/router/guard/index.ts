@@ -1,7 +1,7 @@
 import type { Router, RouteLocationNormalized } from 'vue-router';
 import { unref } from 'vue';
 import { useAppStoreWithOut } from '@/store/modules/app';
-import { Token } from '@/utils/storage';
+import { getToken } from '@/utils/cache/auth';
 
 export function setupRouterGuard(router: Router) {
   createPageGuard(router);
@@ -31,7 +31,7 @@ function createPageGuard(router: Router) {
 function createPageLoadingGuard(router: Router) {
   const { getPageLoading, setPageLoading, setPageLoadingAction } = useAppStoreWithOut();
   router.beforeEach((to) => {
-    if (!Token.get()) {
+    if (!getToken()) {
       return true;
     }
     if (to.meta.loaded) {

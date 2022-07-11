@@ -20,6 +20,7 @@
     "@vueuse/core": "^8.7.5",
     "ant-design-vue": "^3.2.7",
     "axios": "^0.27.2",
+    "crypto-js": "^4.1.1",
     "pinia": "^2.0.14",
     "qrcode": "^1.5.0",
     "resize-observer-polyfill": "^1.5.1",

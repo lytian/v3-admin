@@ -1,14 +1,22 @@
+import type { ProjectConfig } from '#/config';
+import type { BeforeMiniState } from '#/store';
+
 import { defineStore } from 'pinia';
 import store from '@/store';
 
 import { ThemeEnum } from '@/enums/appEnum';
 import { themeMode } from '@/settings/modules/themeSetting';
-import { ThemeMode } from '@/utils/storage';
+import { Persistent, APP_THEME_MODE_KEY, PROJ_CFG_KEY } from '@/utils/cache';
+import { deepMerge } from '@/utils';
 
 interface AppState {
   themeMode?: ThemeEnum;
-  // Page loading status
+  // 页面加载loading
   pageLoading: boolean;
+  // 项目配置
+  projectConfig: ProjectConfig | null;
+  // 窗口最小化之前的状态
+  beforeMiniInfo: BeforeMiniState;
 }
 let timeId: TimeoutHandle;
 export const useAppStore = defineStore({
@@ -16,13 +24,21 @@ export const useAppStore = defineStore({
   state: (): AppState => ({
     themeMode: undefined,
     pageLoading: false,
+    projectConfig: Persistent.getLocal(PROJ_CFG_KEY),
+    beforeMiniInfo: {},
   }),
   getters: {
     getPageLoading(): boolean {
       return this.pageLoading;
     },
     getThemeMode(): 'light' | 'dark' | string {
-      return this.themeMode || ThemeMode.get() || themeMode;
+      return this.themeMode || localStorage.getItem(APP_THEME_MODE_KEY) || themeMode;
+    },
+    getBeforeMiniInfo(): BeforeMiniState {
+      return this.beforeMiniInfo;
+    },
+    getProjectConfig(): ProjectConfig {
+      return this.projectConfig || ({} as ProjectConfig);
     },
   },
   actions: {
@@ -32,7 +48,16 @@ export const useAppStore = defineStore({
 
     setThemeMode(mode: ThemeEnum): void {
       this.themeMode = mode;
-      ThemeMode.set(mode);
+      localStorage.setItem(APP_THEME_MODE_KEY, mode);
+    },
+
+    setBeforeMiniInfo(state: BeforeMiniState): void {
+      this.beforeMiniInfo = state;
+    },
+
+    setProjectConfig(config: DeepPartial<ProjectConfig>): void {
+      this.projectConfig = deepMerge(this.projectConfig || {}, config);
+      Persistent.setLocal(PROJ_CFG_KEY, this.projectConfig);
     },
 
     async setPageLoadingAction(loading: boolean): Promise<void> {

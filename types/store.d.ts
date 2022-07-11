@@ -31,3 +31,10 @@ export interface Menu {
 
   children?: Menu[];
 }
+
+export interface BeforeMiniState {
+  menuCollapsed?: boolean;
+  menuSplit?: boolean;
+  menuMode?: MenuModeEnum;
+  menuType?: MenuTypeEnum;
+}

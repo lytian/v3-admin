@@ -3,8 +3,8 @@ import axios from 'axios';
 import { createVNode } from 'vue';
 import { Modal, message as Message } from 'ant-design-vue';
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
-// import store from '@/store';
-import { Token } from './storage';
+import { getToken, setAuthCache } from './cache/auth';
+import { TOKEN_KEY } from './cache';
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
@@ -22,7 +22,7 @@ instance.interceptors.request.use((config: AxiosRequestConfig) => {
   }
 
   // token处理
-  const token = Token.get();
+  const token = getToken();
   token && (config.headers!.Authorization = token);
   config.headers!['Device-Type'] = import.meta.env.VITE_DEVICE_TYPE;
 
@@ -50,7 +50,7 @@ instance.interceptors.response.use(
     const { authorization } = response.headers;
     // 刷新token
     if (authorization) {
-      Token.set(authorization);
+      setAuthCache(TOKEN_KEY, authorization);
     }
     const { data } = response;
     const { code, message } = data;

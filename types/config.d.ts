@@ -134,16 +134,3 @@ export interface ProjectConfig {
   // Whether to cancel the http request that has been sent but not responded when switching the interface.
   removeAllHttpPending: boolean;
 }
-
-export interface GlobConfig {
-  // 系统标题
-  title: string;
-  // 项目缩写
-  shortName: string;
-  // 接口地址
-  apiUrl: string;
-  // 上传接口地址
-  uploadUrl?: string;
-  // 文件地址前缀
-  filePrefix?: string;
-}
