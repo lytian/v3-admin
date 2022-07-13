@@ -1,7 +1,12 @@
 <template>
   <Form ref="formRef" :model="formData" :rules="formRules" @keypress.enter="handleLogin">
     <Form.Item name="account" :class="getLoginAnimation">
-      <Input v-model:value="formData.account" size="large" placeholder="登录账号" :maxlength="20">
+      <Input
+        v-model:value="formData.account"
+        size="large"
+        :placeholder="t('sys.login.accountPlaceholder')"
+        :maxlength="20"
+      >
         <template #addonBefore>
           <UserOutlined style="font-size: 1.25rem" />
         </template>
@@ -12,7 +17,7 @@
         v-model:value="formData.password"
         visibilityToggle
         size="large"
-        placeholder="登录密码"
+        :placeholder="t('sys.login.passwordPlaceholder')"
         :maxlength="20"
       >
         <template #addonBefore>
@@ -21,7 +26,12 @@
       </Input.Password>
     </Form.Item>
     <Form.Item name="code" :class="getLoginAnimation">
-      <Input v-model:value="formData.code" size="large" placeholder="图形验证码" :maxlength="4">
+      <Input
+        v-model:value="formData.code"
+        size="large"
+        :placeholder="t('sys.login.smsPlaceholder')"
+        :maxlength="4"
+      >
         <template #addonBefore>
           <SafetyOutlined style="font-size: 1.25rem" />
         </template>
@@ -105,6 +115,8 @@ import Captcha from '@/components/Captcha/index.vue';
 import { LoginStateEnum, useLoginState, getLoginAnimation } from '../useLogin';
 import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
+
 const formRef = ref<FormInstance>();
 const loading = ref(false);
 const rememberMe = ref(false);
@@ -133,6 +145,4 @@ async function handleLogin() {
     loading.value = false;
   }
 }
-
-const { t } = useI18n();
 </script>

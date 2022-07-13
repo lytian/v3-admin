@@ -1,14 +1,24 @@
 <template>
   <Form ref="formRef" :model="formData" :rules="formRules" @keypress.enter="handleRegister">
     <Form.Item name="account" :class="getLoginAnimation">
-      <Input v-model:value="formData.account" size="large" placeholder="登录账号" :maxlength="20">
+      <Input
+        v-model:value="formData.account"
+        size="large"
+        :placeholder="t('sys.login.accountPlaceholder')"
+        :maxlength="20"
+      >
         <template #addonBefore>
           <UserOutlined style="font-size: 1.25rem" />
         </template>
       </Input>
     </Form.Item>
     <Form.Item name="phone" :class="getLoginAnimation">
-      <Input v-model:value="formData.phone" size="large" placeholder="手机号码" :maxlength="11">
+      <Input
+        v-model:value="formData.phone"
+        size="large"
+        :placeholder="t('sys.login.mobilePlaceholder')"
+        :maxlength="11"
+      >
         <template #addonBefore>
           <PhoneOutlined style="font-size: 1.25rem" />
         </template>
@@ -19,7 +29,7 @@
         <Input
           v-model:value="formData.smsCode"
           size="large"
-          placeholder="短信验证码"
+          :placeholder="t('sys.login.smsPlaceholder')"
           :maxlength="4"
         >
           <template #addonBefore>
@@ -27,14 +37,14 @@
           </template>
         </Input>
       </Form.Item>
-      <Button size="large" class="flex-shrink ml-4">发送短信</Button>
+      <Button size="large" class="flex-shrink ml-4">{{ t('sys.login.smsCode') }}</Button>
     </div>
     <Form.Item name="password" :class="getLoginAnimation">
       <Input.Password
         v-model:value="formData.password"
         visibilityToggle
         size="large"
-        placeholder="登录密码"
+        :placeholder="t('sys.login.passwordPlaceholder')"
         :maxlength="20"
       >
         <template #addonBefore>
@@ -47,7 +57,7 @@
         v-model:value="formData.confirmPassword"
         visibilityToggle
         size="large"
-        placeholder="再次确认密码"
+        :placeholder="t('sys.login.passwordPlaceholder')"
         :maxlength="20"
       >
         <template #addonBefore>
@@ -56,16 +66,18 @@
       </Input.Password>
     </Form.Item>
     <Form.Item :class="getLoginAnimation" name="policy">
-      <Checkbox v-model:checked="formData.policy" size="small"> 我同意XXXX隐私政策 </Checkbox>
+      <Checkbox v-model:checked="formData.policy" size="small">
+        {{ t('sys.login.policy') }}
+      </Checkbox>
     </Form.Item>
 
     <Form.Item :class="getLoginAnimation">
       <Button type="primary" size="large" block @click="handleRegister" :loading="loading">
-        注册
+        {{ t('sys.login.registerButton') }}
       </Button>
     </Form.Item>
     <Form.Item :class="getLoginAnimation">
-      <Button size="large" block @click="handleBackLogin"> 返回 </Button>
+      <Button size="large" block @click="handleBackLogin"> {{ t('sys.login.backSignIn') }} </Button>
     </Form.Item>
   </Form>
 </template>
@@ -77,6 +89,9 @@ import { ref, reactive } from 'vue';
 import { Form, Input, Button, message as Message, Checkbox } from 'ant-design-vue';
 import { UserOutlined, PhoneOutlined, SafetyOutlined, LockOutlined } from '@ant-design/icons-vue';
 import { useLoginState, getLoginAnimation } from '../useLogin';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const formRef = ref<FormInstance>();
 const loading = ref(false);

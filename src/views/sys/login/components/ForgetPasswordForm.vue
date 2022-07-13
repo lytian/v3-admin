@@ -1,7 +1,12 @@
 <template>
   <Form ref="formRef" :model="formData" :rules="formRules" @keypress.enter="handleResetPassword">
     <Form.Item name="phone" :class="getLoginAnimation">
-      <Input v-model:value="formData.phone" size="large" placeholder="手机号码" :maxlength="11">
+      <Input
+        v-model:value="formData.phone"
+        size="large"
+        :placeholder="t('sys.login.mobilePlaceholder')"
+        :maxlength="11"
+      >
         <template #addonBefore>
           <PhoneOutlined style="font-size: 1.25rem" />
         </template>
@@ -12,7 +17,7 @@
         <Input
           v-model:value="formData.smsCode"
           size="large"
-          placeholder="短信验证码"
+          :placeholder="t('sys.login.smsPlaceholder')"
           :maxlength="4"
         >
           <template #addonBefore>
@@ -27,7 +32,7 @@
         v-model:value="formData.password"
         visibilityToggle
         size="large"
-        placeholder="登录密码"
+        :placeholder="t('sys.login.passwordPlaceholder')"
         :maxlength="20"
       >
         <template #addonBefore>
@@ -40,7 +45,7 @@
         v-model:value="formData.confirmPassword"
         visibilityToggle
         size="large"
-        placeholder="再次确认密码"
+        :placeholder="t('sys.login.passwordPlaceholder')"
         :maxlength="20"
       >
         <template #addonBefore>
@@ -51,11 +56,13 @@
 
     <Form.Item :class="getLoginAnimation">
       <Button type="primary" size="large" block @click="handleResetPassword" :loading="loading">
-        确定重置
+        {{ t('sys.login.forgetFormTitle') }}
       </Button>
     </Form.Item>
     <Form.Item :class="getLoginAnimation">
-      <Button size="large" block @click="handleBackLogin"> 返回 </Button>
+      <Button size="large" block @click="handleBackLogin">
+        {{ t('sys.login.backSignIn') }}
+      </Button>
     </Form.Item>
   </Form>
 </template>
@@ -67,6 +74,9 @@ import { ref, reactive } from 'vue';
 import { Form, Input, Button, message as Message } from 'ant-design-vue';
 import { PhoneOutlined, SafetyOutlined, LockOutlined } from '@ant-design/icons-vue';
 import { useLoginState, getLoginAnimation } from '../useLogin';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const formRef = ref<FormInstance>();
 const loading = ref(false);
