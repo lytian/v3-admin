@@ -2,7 +2,6 @@
   <div class="login-page">
     <component :is="illustrationSvg" class="illustration" />
     <div class="login-box">
-      <DarkModeToggle />
       <img class="login-box__logo" :class="getLoginAnimation" src="@/assets/images/logo.png" />
       <h2 class="login-box__title" :class="getLoginAnimation">{{ title }}</h2>
 
@@ -11,6 +10,10 @@
       <QrCodeForm v-else-if="getLoginState === LoginStateEnum.QR_CODE" />
       <RegisterForm v-else-if="getLoginState === LoginStateEnum.REGISTER" />
       <ForgetPasswordForm v-else-if="getLoginState === LoginStateEnum.RESET_PASSWORD" />
+    </div>
+    <div class="login-action">
+      <LocalePicker class="mr-2 p-2" />
+      <DarkModeToggle />
     </div>
   </div>
 </template>
@@ -26,6 +29,7 @@ import illustration5 from '@/assets/svg/login-illustration5.svg?component';
 import illustration6 from '@/assets/svg/login-illustration6.svg?component';
 import { LoginStateEnum, useLoginState, getLoginAnimation } from './useLogin';
 import DarkModeToggle from '@/components/Application/DarkModeToggle.vue';
+import LocalePicker from '@/components/Application/LocalePicker.vue';
 import LoginForm from './components/LoginForm.vue';
 import PhoneForm from './components/PhoneForm.vue';
 import QrCodeForm from './components/QrCodeForm.vue';
@@ -69,7 +73,6 @@ const { getLoginState } = useLoginState();
   display: flex;
   justify-content: space-around;
   align-items: center;
-  // padding: 0 2rem;
   box-sizing: border-box;
 
   .illustration {
@@ -111,6 +114,14 @@ const { getLoginState } = useLoginState();
         }
       }
     }
+  }
+
+  .login-action {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    align-items: center;
   }
 }
 </style>

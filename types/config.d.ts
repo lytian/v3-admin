@@ -7,7 +7,7 @@ import {
   SessionTimeoutProcessingEnum,
 } from '@/enums/appEnum';
 
-export type LocaleType = 'zh_CN' | 'en' | 'ru' | 'ja' | 'ko';
+export type LocaleType = 'zh-CN' | 'en' | 'ru' | 'ja' | 'ko';
 
 export interface MenuSetting {
   bgColor: string;

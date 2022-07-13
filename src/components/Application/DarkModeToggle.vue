@@ -43,7 +43,7 @@ html[data-theme='dark'] {
 
 .theme-toggle {
   position: relative;
-  display: flex;
+  display: inline-flex;
   width: 50px;
   height: 26px;
   padding: 0 4px;

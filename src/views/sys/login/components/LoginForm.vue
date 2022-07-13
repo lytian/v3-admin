@@ -33,33 +33,41 @@
 
     <Row :class="getLoginAnimation">
       <Col :span="12">
-        <Checkbox v-model:checked="rememberMe" size="small"> 记住密码 </Checkbox>
+        <Checkbox v-model:checked="rememberMe" size="small">
+          {{ t('sys.login.rememberMe') }}
+        </Checkbox>
       </Col>
       <Col :span="12" class="text-right mb-2">
         <Button type="link" size="small" @click="setLoginState(LoginStateEnum.RESET_PASSWORD)">
-          忘记密码？
+          {{ t('sys.login.forgetPassword') }}
         </Button>
       </Col>
     </Row>
 
     <Form.Item :class="getLoginAnimation">
       <Button type="primary" size="large" block @click="handleLogin" :loading="loading">
-        登录
+        {{ t('sys.login.loginButton') }}
       </Button>
     </Form.Item>
     <Row :class="getLoginAnimation" :gutter="16">
       <Col :md="8" :xs="24">
-        <Button block @click="setLoginState(LoginStateEnum.PHONE)"> 手机登录 </Button>
+        <Button block @click="setLoginState(LoginStateEnum.PHONE)">
+          {{ t('sys.login.mobileSignInFormTitle') }}
+        </Button>
       </Col>
       <Col :md="8" :xs="24">
-        <Button block @click="setLoginState(LoginStateEnum.QR_CODE)"> 扫码登录 </Button>
+        <Button block @click="setLoginState(LoginStateEnum.QR_CODE)">
+          {{ t('sys.login.qrSignInFormTitle') }}
+        </Button>
       </Col>
       <Col :md="8" :xs="24">
-        <Button block @click="setLoginState(LoginStateEnum.REGISTER)"> 注册 </Button>
+        <Button block @click="setLoginState(LoginStateEnum.REGISTER)">
+          {{ t('sys.login.registerButton') }}
+        </Button>
       </Col>
     </Row>
 
-    <Divider class="mt-16!" :class="getLoginAnimation">第三方登录</Divider>
+    <Divider class="mt-16!" :class="getLoginAnimation">{{ t('sys.login.otherSignIn') }}</Divider>
 
     <div class="sign-in-way" :class="getLoginAnimation">
       <GithubFilled />
@@ -95,6 +103,7 @@ import {
 } from '@ant-design/icons-vue';
 import Captcha from '@/components/Captcha/index.vue';
 import { LoginStateEnum, useLoginState, getLoginAnimation } from '../useLogin';
+import { useI18n } from 'vue-i18n';
 
 const formRef = ref<FormInstance>();
 const loading = ref(false);
@@ -124,4 +133,6 @@ async function handleLogin() {
     loading.value = false;
   }
 }
+
+const { t } = useI18n();
 </script>

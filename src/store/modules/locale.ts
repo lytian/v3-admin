@@ -5,32 +5,15 @@ import { store } from '@/store';
 
 import { createLocalStorage, LOCALE_KEY } from '@/utils/cache';
 
-export const LOCALE: { [key: string]: LocaleType } = {
-  ZH_CN: 'zh_CN',
-  EN_US: 'en',
-};
-
 export const localeSetting: LocaleSetting = {
   showPicker: true,
   // Locale
-  locale: LOCALE.ZH_CN,
+  locale: 'zh-CN',
   // Default locale
-  fallback: LOCALE.ZH_CN,
+  fallback: 'zh-CN',
   // available Locales
-  availableLocales: [LOCALE.ZH_CN, LOCALE.EN_US],
+  availableLocales: ['zh-CN', 'en'],
 };
-
-// locale list
-export const localeList = [
-  {
-    text: '简体中文',
-    event: LOCALE.ZH_CN,
-  },
-  {
-    text: 'English',
-    event: LOCALE.EN_US,
-  },
-];
 
 const ls = createLocalStorage();
 const lsLocaleSetting = (ls.get(LOCALE_KEY) || localeSetting) as LocaleSetting;
@@ -49,7 +32,7 @@ export const useLocaleStore = defineStore({
       return !!this.localInfo?.showPicker;
     },
     getLocale(): LocaleType {
-      return this.localInfo?.locale ?? 'zh_CN';
+      return this.localInfo?.locale ?? 'zh-CN';
     },
   },
   actions: {
