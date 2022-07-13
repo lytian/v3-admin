@@ -2,15 +2,24 @@ import type { ProjectConfig } from '#/config';
 import type { BeforeMiniState } from '#/store';
 
 import { defineStore } from 'pinia';
-import store from '@/store';
+import { store } from '@/store';
 
 import { ThemeEnum } from '@/enums/appEnum';
-import { themeMode } from '@/settings/modules/themeSetting';
 import { Persistent, APP_THEME_MODE_KEY, PROJ_CFG_KEY } from '@/utils/cache';
 import { deepMerge } from '@/utils';
+import { addClass, hasClass, removeClass } from '@/utils/dom';
+import { getThemeColors, generateColors } from '../../../build/config/themeConfig';
+import { mixLighten, mixDarken, tinycolor } from 'vite-plugin-theme/es/colorUtils';
+import {
+  darkCssIsReady,
+  loadDarkThemeCss,
+  replaceStyleVariables,
+} from 'vite-plugin-theme/es/client';
+
+export const darkMode = ThemeEnum.LIGHT;
 
 interface AppState {
-  themeMode?: ThemeEnum;
+  darkMode?: ThemeEnum;
   // 页面加载loading
   pageLoading: boolean;
   // 项目配置
@@ -22,7 +31,7 @@ let timeId: TimeoutHandle;
 export const useAppStore = defineStore({
   id: 'app',
   state: (): AppState => ({
-    themeMode: undefined,
+    darkMode: undefined,
     pageLoading: false,
     projectConfig: Persistent.getLocal(PROJ_CFG_KEY),
     beforeMiniInfo: {},
@@ -31,8 +40,8 @@ export const useAppStore = defineStore({
     getPageLoading(): boolean {
       return this.pageLoading;
     },
-    getThemeMode(): 'light' | 'dark' | string {
-      return this.themeMode || localStorage.getItem(APP_THEME_MODE_KEY) || themeMode;
+    getDarkMode(): 'light' | 'dark' | string {
+      return this.darkMode || localStorage.getItem(APP_THEME_MODE_KEY) || darkMode;
     },
     getBeforeMiniInfo(): BeforeMiniState {
       return this.beforeMiniInfo;
@@ -46,8 +55,8 @@ export const useAppStore = defineStore({
       this.pageLoading = loading;
     },
 
-    setThemeMode(mode: ThemeEnum): void {
-      this.themeMode = mode;
+    setDarkMode(mode: ThemeEnum): void {
+      this.darkMode = mode;
       localStorage.setItem(APP_THEME_MODE_KEY, mode);
     },
 
@@ -78,4 +87,37 @@ export const useAppStore = defineStore({
 // Need to be used outside the setup
 export function useAppStoreWithOut() {
   return useAppStore(store);
+}
+
+// 更换深色模式
+export async function changeDarkMode(mode: string | null = 'light') {
+  const htmlRoot = document.documentElement;
+  const hasDarkClass = hasClass(htmlRoot, 'dark');
+  if (mode === 'dark') {
+    if (import.meta.env.PROD && !darkCssIsReady) {
+      await loadDarkThemeCss();
+    }
+    htmlRoot.setAttribute('data-theme', 'dark');
+    if (!hasDarkClass) {
+      addClass(htmlRoot, 'dark');
+    }
+  } else {
+    htmlRoot.setAttribute('data-theme', 'light');
+    if (hasDarkClass) {
+      removeClass(htmlRoot, 'dark');
+    }
+  }
+}
+
+// 修改主题颜色
+export async function changeThemeColor(color: string) {
+  const colors = generateColors({
+    color: color,
+    mixDarken,
+    mixLighten,
+    tinycolor,
+  });
+  return await replaceStyleVariables({
+    colorVariables: [...getThemeColors(color), ...colors],
+  });
 }

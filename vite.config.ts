@@ -36,6 +36,10 @@ export default defineConfig(({ command, mode }) => {
     resolve: {
       alias: [
         {
+          find: 'vue-i18n',
+          replacement: 'vue-i18n/dist/vue-i18n.cjs.js',
+        },
+        {
           find: /@\//,
           replacement: pathResolve('src') + '/',
         },

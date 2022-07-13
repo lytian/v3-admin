@@ -1,8 +1,11 @@
-import { cacheCipher, DEFAULT_CACHE_TIME } from '@/settings/modules/encryptionSetting';
+import { DEFAULT_CACHE_TIME } from './index';
 import { AesEncryption } from '@/utils/cipher';
 import { isNullOrUnDef } from '@/utils/is';
 
-const encryption = new AesEncryption(cacheCipher);
+const encryption = new AesEncryption({
+  key: '_11111000001111@',
+  iv: '@11111000001111_',
+});
 
 /**
  * Storage class

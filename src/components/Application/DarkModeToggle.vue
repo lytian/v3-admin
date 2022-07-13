@@ -1,5 +1,5 @@
 <template>
-  <div :class="['theme-toggle', { 'theme-toggle--dark': isDark }]" @click="toggleThemeMode">
+  <div :class="['theme-toggle', { 'theme-toggle--dark': isDark }]" @click="toggleDarkMode">
     <div class="theme-toggle-inner"></div>
     <SunIcon width="16px" />
     <MoonIcon width="16px" />
@@ -9,28 +9,27 @@
 import { defineComponent, unref, computed } from 'vue';
 import SunIcon from '@/assets/svg/sun.svg?component';
 import MoonIcon from '@/assets/svg/moon.svg?component';
-import { useAppStore } from '@/store/modules/app';
+import { useAppStore, changeDarkMode } from '@/store/modules/app';
 import { ThemeEnum } from '@/enums/appEnum';
-import { changeThemeMode } from '@/settings/modules/themeSetting';
 
 export default defineComponent({
-  name: 'ThemeToggle',
+  name: 'DarkModeToggle',
   components: {
     SunIcon,
     MoonIcon,
   },
   setup() {
     const appStore = useAppStore();
-    const isDark = computed(() => appStore.getThemeMode === ThemeEnum.DARK);
+    const isDark = computed(() => appStore.getDarkMode === ThemeEnum.DARK);
 
-    function toggleThemeMode() {
+    function toggleDarkMode() {
       const darkMode = unref(isDark) ? ThemeEnum.LIGHT : ThemeEnum.DARK;
-      appStore.setThemeMode(darkMode);
-      changeThemeMode(darkMode);
+      appStore.setDarkMode(darkMode);
+      changeDarkMode(darkMode);
     }
     return {
       isDark,
-      toggleThemeMode,
+      toggleDarkMode,
     };
   },
 });

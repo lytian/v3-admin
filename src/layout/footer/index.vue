@@ -15,13 +15,11 @@ export default defineComponent({
   name: 'LayoutFooter',
   components: { [Layout.Footer.name]: Layout.Footer },
   setup() {
-    // const { getShowFooter } = useRootSetting();
     const { currentRoute } = useRouter();
 
     const footerRef = ref();
 
     const getShowLayoutFooter = computed(() => {
-      // return unref(getShowFooter) &&
       return !unref(currentRoute).meta?.hiddenFooter;
     });
 

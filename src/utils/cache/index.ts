@@ -1,10 +1,18 @@
 import type { ProjectConfig } from '#/config';
 
 import { Memory } from './memory';
-import { DEFAULT_CACHE_TIME, enableStorageEncryption } from '@/settings/modules/encryptionSetting';
 import { pick } from 'lodash-es';
 import { toRaw } from 'vue';
 import { WebStorage } from './storage';
+
+export const DEFAULT_CACHE_TIME = 60 * 60 * 24 * 7;
+
+// Whether the system cache is encrypted using aes
+export const enableStorageEncryption = !import.meta.env.DEV;
+
+export const PREFIX_KEY = (import.meta.env.VITE_APP_SHORT_NAME + '__')
+  .replaceAll('-', '_')
+  .toUpperCase();
 
 // token key
 export const TOKEN_KEY = 'TOKEN__';
@@ -28,18 +36,24 @@ export interface BasicStorage {
 }
 export type BasicKeys = keyof BasicStorage;
 
-const PREFIX_KEY = (import.meta.env.VITE_APP_SHORT_NAME + '__').replaceAll('-', '_').toUpperCase();
+export function createLocalStorage() {
+  return new WebStorage({
+    storage: localStorage,
+    prefixKey: PREFIX_KEY,
+    hasEncrypt: enableStorageEncryption,
+  });
+}
 
-const ls = new WebStorage({
-  storage: localStorage,
-  prefixKey: PREFIX_KEY,
-  hasEncrypt: enableStorageEncryption,
-});
-const ss = new WebStorage({
-  storage: sessionStorage,
-  prefixKey: PREFIX_KEY,
-  hasEncrypt: enableStorageEncryption,
-});
+export function createSesstionStorage() {
+  return new WebStorage({
+    storage: sessionStorage,
+    prefixKey: PREFIX_KEY,
+    hasEncrypt: enableStorageEncryption,
+  });
+}
+
+const ls = createLocalStorage();
+const ss = createSesstionStorage();
 
 const localMemory = new Memory(DEFAULT_CACHE_TIME);
 const sessionMemory = new Memory(DEFAULT_CACHE_TIME);

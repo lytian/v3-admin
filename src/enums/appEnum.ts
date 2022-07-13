@@ -3,12 +3,6 @@ export const SIDE_BAR_MINI_WIDTH = 48;
 export const SIDE_BAR_SHOW_TIT_MINI_WIDTH = 80;
 export const MENU_WIDTH = 210;
 
-/** 设备类型 */
-export enum AppDeviceEnum {
-  DESKTOP = 'desktop',
-  MODILE = 'modile',
-}
-
 /** 系统主题 */
 export enum ThemeEnum {
   DARK = 'dark',
@@ -39,18 +33,6 @@ export enum SettingButtonPositionEnum {
 export enum SessionTimeoutProcessingEnum {
   ROUTE_JUMP,
   PAGE_COVERAGE,
-}
-
-/**
- * 权限模式
- */
-export enum PermissionModeEnum {
-  // role
-  ROLE = 'ROLE',
-  // black
-  BACK = 'BACK',
-  // route mapping
-  ROUTE_MAPPING = 'ROUTE_MAPPING',
 }
 
 //  Route switching animation

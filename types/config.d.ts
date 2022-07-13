@@ -1,14 +1,11 @@
-import { MenuTypeEnum, MenuModeEnum, TriggerEnum, MixSidebarTriggerEnum } from '/@/enums/menuEnum';
+import { MenuTypeEnum, MenuModeEnum, TriggerEnum, MixSidebarTriggerEnum } from '@/enums/menuEnum';
 import {
   ContentEnum,
-  PermissionModeEnum,
   ThemeEnum,
   RouterTransitionEnum,
   SettingButtonPositionEnum,
   SessionTimeoutProcessingEnum,
-} from '/@/enums/appEnum';
-
-import { CacheTypeEnum } from '/@/enums/cacheEnum';
+} from '@/enums/appEnum';
 
 export type LocaleType = 'zh_CN' | 'en' | 'ru' | 'ja' | 'ko';
 
@@ -16,7 +13,6 @@ export interface MenuSetting {
   bgColor: string;
   fixed: boolean;
   collapsed: boolean;
-  canDrag: boolean;
   show: boolean;
   hidden: boolean;
   split: boolean;
@@ -47,90 +43,79 @@ export interface HeaderSetting {
   fixed: boolean;
   show: boolean;
   theme: ThemeEnum;
-  // Turn on full screen
   showFullScreen: boolean;
-  // Whether to show the lock screen
   useLockPage: boolean;
-  // Show document button
-  showDoc: boolean;
-  // Show message center button
   showNotice: boolean;
   showSearch: boolean;
 }
 
 export interface LocaleSetting {
   showPicker: boolean;
-  // Current language
+  // 当前语言
   locale: LocaleType;
-  // default language
+  // 默认语言
   fallback: LocaleType;
-  // available Locales
+  // 可用语言
   availableLocales: LocaleType[];
 }
 
 export interface TransitionSetting {
-  //  Whether to open the page switching animation
+  // 是否开启页面切换动画
   enable: boolean;
-  // Route basic switching animation
+  // 路由切换动画
   basicTransition: RouterTransitionEnum;
-  // Whether to open page switching loading
+  // 页面loading
   openPageLoading: boolean;
-  // Whether to open the top progress bar
+  // 页面加载进度条
   openNProgress: boolean;
 }
 
 export interface ProjectConfig {
-  // Storage location of permission related information
-  permissionCacheType: CacheTypeEnum;
-  // Whether to show the configuration button
+  // 是否显示项目配置按钮
   showSettingButton: boolean;
-  // Whether to show the theme switch button
+  // 是否显示主题模式切换按钮
   showDarkModeToggle: boolean;
-  // Configure where the button is displayed
+  // 项目配置按钮位置
   settingButtonPosition: SettingButtonPositionEnum;
-  // Permission mode
-  permissionMode: PermissionModeEnum;
-  // Session timeout processing
+  // 会话超时处理
   sessionTimeoutProcessing: SessionTimeoutProcessingEnum;
-  // Website gray mode, open for possible mourning dates
+  // 灰色模式
   grayMode: boolean;
-  // Whether to turn on the color weak mode
+  // 色弱模式
   colorWeak: boolean;
-  // Theme color
+  // 主题颜色
   themeColor: string;
 
-  // The main interface is displayed in full screen, the menu is not displayed, and the top
+  // 内容全屏
   fullContent: boolean;
-  // content width
+  // 内容模式
   contentMode: ContentEnum;
-  // Whether to display the logo
+  // 是否显示logo
   showLogo: boolean;
-  // Whether to show the global footer
+  // 是否显示Footer
   showFooter: boolean;
-  // menuType: MenuTypeEnum;
+  // header设置
   headerSetting: HeaderSetting;
-  // menuSetting
+  // menu设置
   menuSetting: MenuSetting;
-  // Multi-tab settings
+  // Multi-tab设置
   multiTabsSetting: MultiTabsSetting;
-  // Animation configuration
+  // 过渡动画
   transitionSetting: TransitionSetting;
-  // pageLayout whether to enable keep-alive
+  // 开启KeepAlive
   openKeepAlive: boolean;
-  // Lock screen time
+  // 锁屏时间
   lockTime: number;
-  // Show breadcrumbs
+  // 是否显示面包屑
   showBreadCrumb: boolean;
-  // Show breadcrumb icon
+  // 是否显示面包屑图标
   showBreadCrumbIcon: boolean;
-  // Use error-handler-plugin
-  useErrorHandle: boolean;
-  // Whether to open back to top
+  // 是否显示返回顶部
   useOpenBackTop: boolean;
-  // Is it possible to embed iframe pages
+  // 是否可以嵌入Iframe
   canEmbedIFramePage: boolean;
-  // Whether to delete unclosed messages and notify when switching the interface
+  // 切换页面时，是否删除未关闭的消息并通知
   closeMessageOnSwitch: boolean;
-  // Whether to cancel the http request that has been sent but not responded when switching the interface.
+  // 切换页面时，是否关闭未响应的网络请求
   removeAllHttpPending: boolean;
 }
