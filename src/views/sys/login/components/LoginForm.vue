@@ -91,17 +91,8 @@
 <script setup lang="ts">
 import type { FormInstance } from 'ant-design-vue';
 import type { Rule } from 'ant-design-vue/lib/form/interface';
-import { ref, reactive } from 'vue';
-import {
-  Checkbox,
-  Form,
-  Input,
-  Button,
-  Row,
-  Col,
-  Divider,
-  message as Message,
-} from 'ant-design-vue';
+import { ref, reactive, unref } from 'vue';
+import { Checkbox, Form, Input, Button, Row, Col, Divider } from 'ant-design-vue';
 import {
   UserOutlined,
   LockOutlined,
@@ -136,11 +127,11 @@ const formRules: { [k: string]: Rule | Rule[] } = {
 const { setLoginState } = useLoginState();
 
 async function handleLogin() {
-  if (!(await formRef.value?.validate())) return;
   try {
+    if (!(await unref(formRef)?.validate())) return;
     loading.value = true;
   } catch (error) {
-    Message.error((error as unknown as Error).message || '登录失败');
+    console.error(error);
   } finally {
     loading.value = false;
   }

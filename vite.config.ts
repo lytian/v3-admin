@@ -62,6 +62,13 @@ export default defineConfig(({ command, mode }) => {
     },
     // The vite plugin used by the project. The quantity is large, so it is separately extracted and managed
     plugins: createVitePlugins(viteEnv, isBuild),
+    optimizeDeps: {
+      include: [
+        'ant-design-vue/es/locale/zh_CN',
+        'ant-design-vue/es/locale/en_US',
+        'dayjs/locale/zh-cn',
+      ],
+    },
     build: {
       target: 'es2015',
       minify: 'terser',

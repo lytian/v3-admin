@@ -85,8 +85,8 @@
 <script setup lang="ts">
 import type { FormInstance } from 'ant-design-vue';
 import type { Rule } from 'ant-design-vue/lib/form/interface';
-import { ref, reactive } from 'vue';
-import { Form, Input, Button, message as Message, Checkbox } from 'ant-design-vue';
+import { ref, reactive, unref } from 'vue';
+import { Form, Input, Button, Checkbox } from 'ant-design-vue';
 import { UserOutlined, PhoneOutlined, SafetyOutlined, LockOutlined } from '@ant-design/icons-vue';
 import { useLoginState, getLoginAnimation } from '../useLogin';
 import { useI18n } from 'vue-i18n';
@@ -130,11 +130,11 @@ const formRules: { [k: string]: Rule | Rule[] } = {
 const { handleBackLogin } = useLoginState();
 
 async function handleRegister() {
-  if (!(await formRef.value?.validate())) return;
   try {
+    if (!(await unref(formRef)?.validate())) return;
     loading.value = true;
   } catch (error) {
-    Message.error((error as unknown as Error).message || '注册失败');
+    console.error(error);
   } finally {
     loading.value = false;
   }
