@@ -27,7 +27,9 @@ interface AppState {
   // 窗口最小化之前的状态
   beforeMiniInfo: BeforeMiniState;
 }
+
 let timeId: TimeoutHandle;
+
 export const useAppStore = defineStore({
   id: 'app',
   state: (): AppState => ({

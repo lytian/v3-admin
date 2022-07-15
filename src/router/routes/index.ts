@@ -63,6 +63,12 @@ export const RedirectRoute: AppRouteRecordRaw = {
 };
 
 // Basic routing without permission
-export const basicRoutes = [LoginRoute, RootRoute, RedirectRoute, NotFoundRoute];
+export const basicRoutes = [
+  LoginRoute,
+  RootRoute,
+  RedirectRoute,
+  NotFoundRoute,
+  ...routeModuleList,
+];
 
 export const asyncRoutes = [NotFoundRoute, ...routeModuleList];

@@ -7,7 +7,7 @@ import { getToken, setAuthCache } from './cache/auth';
 import { TOKEN_KEY } from './cache';
 
 const instance = axios.create({
-  baseURL: import.meta.env.VITE_BASE_URL,
+  baseURL: import.meta.env.VITE_APP_API_URL,
   headers: {
     'Content-Type': 'application/json;charset=UTF-8',
     // 'X-Server-Type': 'AHP'
@@ -54,24 +54,8 @@ instance.interceptors.response.use(
     }
     const { data } = response;
     const { code, message } = data;
-    if (code === 200) {
+    if (code === '000000') {
       return data;
-    } else if (code === 4001 || code === 4008 || code === 200) {
-      // 无效登录
-      Modal.confirm({
-        title: '退出登录',
-        icon: createVNode(ExclamationCircleOutlined),
-        content: '您登录已过期，请重新登录',
-        okText: '确认',
-        cancelText: '取消',
-        onOk: function () {
-          // store.dispatch('user/resetToken');
-          location.reload();
-        },
-      });
-    } else if (code === 4999 && data.data) {
-      // 系统停用
-      window.location.replace(window.location.origin + '/' + data.data.url);
     } else if (message) {
       httpError(message);
     }
@@ -93,6 +77,7 @@ instance.interceptors.response.use(
         httpError('未知网络错误');
         break;
     }
+    return Promise.reject(error);
   },
 );
 

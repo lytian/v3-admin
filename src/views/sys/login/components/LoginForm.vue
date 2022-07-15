@@ -36,7 +36,7 @@
           <SafetyOutlined style="font-size: 1.25rem" />
         </template>
         <template #addonAfter>
-          <Captcha v-model:code="captchaCode" :height="38" />
+          <img class="code-img" :src="captchaCode" @click="getCaptcha()" />
         </template>
       </Input>
     </Form.Item>
@@ -91,7 +91,7 @@
 <script setup lang="ts">
 import type { FormInstance } from 'ant-design-vue';
 import type { Rule } from 'ant-design-vue/lib/form/interface';
-import { ref, reactive, unref } from 'vue';
+import { ref, reactive, unref, onMounted } from 'vue';
 import { Checkbox, Form, Input, Button, Row, Col, Divider } from 'ant-design-vue';
 import {
   UserOutlined,
@@ -102,9 +102,13 @@ import {
   AlipayCircleFilled,
   GoogleCircleFilled,
 } from '@ant-design/icons-vue';
-import Captcha from '@/components/Captcha/index.vue';
+import { notification } from 'ant-design-vue';
+// import Captcha from '@/components/Captcha/index.vue';
 import { LoginStateEnum, useLoginState, getLoginAnimation } from '../useLogin';
 import { useI18n } from 'vue-i18n';
+import request from '@/utils/request';
+import { useUserStore } from '@/store/modules/user';
+import { useRouter } from 'vue-router';
 
 const { t } = useI18n();
 
@@ -116,6 +120,7 @@ const captchaCode = ref('');
 const formData = reactive({
   account: '',
   password: '',
+  key: null,
   code: '',
 });
 const formRules: { [k: string]: Rule | Rule[] } = {
@@ -126,14 +131,38 @@ const formRules: { [k: string]: Rule | Rule[] } = {
 
 const { setLoginState } = useLoginState();
 
+const { setToken } = useUserStore();
+const router = useRouter();
+
+function getCaptcha() {
+  request.get('/oapi/captcha/generateCaptcha').then((res) => {
+    formData.key = res.data.key;
+    captchaCode.value = res.data.image;
+  });
+}
+
 async function handleLogin() {
   try {
     if (!(await unref(formRef)?.validate())) return;
     loading.value = true;
+    const res: any = await request.post('/auth/login', formData);
+    if (res.data) {
+      notification.success({
+        message: t('sys.login.loginSuccessTitle'),
+        description: `${t('sys.login.loginSuccessDesc')}: ${res.data.userInfo.username}`,
+        duration: 3,
+      });
+      setToken(res.data.token);
+      router.push('/dashboard');
+    }
   } catch (error) {
     console.error(error);
   } finally {
     loading.value = false;
   }
 }
+
+onMounted(() => {
+  getCaptcha();
+});
 </script>

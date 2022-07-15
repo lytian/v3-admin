@@ -1,7 +1,7 @@
 import type { Router, RouteLocationNormalized } from 'vue-router';
 import { unref } from 'vue';
 import { useAppStoreWithOut } from '@/store/modules/app';
-import { getToken } from '@/utils/cache/auth';
+import { useUserStoreWithOut } from '@/store/modules/user';
 
 export function setupRouterGuard(router: Router) {
   createPageGuard(router);
@@ -29,24 +29,30 @@ function createPageGuard(router: Router) {
 
 // Used to handle page loading status
 function createPageLoadingGuard(router: Router) {
-  const { getPageLoading, setPageLoading, setPageLoadingAction } = useAppStoreWithOut();
-  router.beforeEach((to) => {
-    if (!getToken()) {
+  const userStore = useUserStoreWithOut();
+  const appStore = useAppStoreWithOut();
+  // const { getOpenPageLoading } = useTransitionSetting();
+  router.beforeEach(async (to) => {
+    if (!userStore.getToken) {
       return true;
     }
     if (to.meta.loaded) {
       return true;
     }
 
-    setPageLoadingAction(true);
+    if (unref(appStore.projectConfig?.transitionSetting.openPageLoading)) {
+      appStore.setPageLoadingAction(true);
+      return true;
+    }
+
     return true;
   });
-  router.afterEach(() => {
-    if (unref(getPageLoading)) {
+  router.afterEach(async () => {
+    if (unref(appStore.projectConfig?.transitionSetting.openPageLoading)) {
       // TODO Looking for a better way
       // The timer simulates the loading time to prevent flashing too fast,
       setTimeout(() => {
-        setPageLoading(false);
+        appStore.setPageLoading(false);
       }, 220);
     }
     return true;

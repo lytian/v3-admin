@@ -1,7 +1,7 @@
 <template>
-  <a-footer class="layout-footer" v-if="getShowLayoutFooter" ref="footerRef">
+  <AFooter class="layout-footer" v-if="getShowLayoutFooter" ref="footerRef">
     Copyright &copy;2022 <a @click="openWindow('https://www.baidu.com')">Vincent</a>
-  </a-footer>
+  </AFooter>
 </template>
 
 <script lang="ts">
@@ -13,7 +13,7 @@ import { useRouter } from 'vue-router';
 
 export default defineComponent({
   name: 'LayoutFooter',
-  components: { [Layout.Footer.name]: Layout.Footer },
+  components: { AFooter: Layout.Footer },
   setup() {
     const { currentRoute } = useRouter();
 
@@ -31,3 +31,22 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="less">
+@normal-color: rgba(0, 0, 0, 0.45);
+
+@hover-color: rgba(0, 0, 0, 0.85);
+
+.layout-footer {
+  color: @normal-color;
+  text-align: center;
+
+  a {
+    color: @normal-color;
+
+    &:hover {
+      color: @hover-color;
+    }
+  }
+}
+</style>

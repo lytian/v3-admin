@@ -1,4 +1,5 @@
 import type { ProjectConfig } from '#/config';
+import type { UserInfo } from '#/store';
 
 import { Memory } from './memory';
 import { pick } from 'lodash-es';
@@ -19,6 +20,9 @@ export const TOKEN_KEY = 'TOKEN__';
 
 export const LOCALE_KEY = 'LOCALE__';
 
+// user info key
+export const USER_INFO_KEY = 'USER__INFO__';
+
 // project config key
 export const PROJ_CFG_KEY = 'PROJ__CFG__KEY__';
 
@@ -32,6 +36,7 @@ export const APP_SESSION_CACHE_KEY = 'COMMON__SESSION__KEY__';
 
 export interface BasicStorage {
   [TOKEN_KEY]: string | number | null | undefined;
+  [USER_INFO_KEY]: UserInfo;
   [PROJ_CFG_KEY]: ProjectConfig;
 }
 export type BasicKeys = keyof BasicStorage;

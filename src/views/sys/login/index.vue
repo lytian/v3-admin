@@ -114,6 +114,12 @@ const { getLoginState } = useLoginState();
         }
       }
     }
+
+    .code-img {
+      cursor: pointer;
+      width: 120px;
+      height: 38px;
+    }
   }
 
   .login-action {
