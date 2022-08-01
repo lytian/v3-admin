@@ -37,8 +37,7 @@ export function useLocale() {
     return i18n.global.getLocaleMessage(unref(getLocale))?.antdLocale ?? {};
   });
 
-  // Switching the language will change the locale of useI18n
-  // And submit to configuration modification
+  // 切换多语言，并提交到配置修改
   async function changeLocale(locale: LocaleType) {
     const globalI18n = i18n.global;
     const currentLocale = unref(globalI18n.locale);

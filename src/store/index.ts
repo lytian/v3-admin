@@ -1,5 +1,6 @@
+import { changeDarkMode } from '@/settings/designSetting';
 import { createPinia } from 'pinia';
-import { useAppStore, changeDarkMode } from './modules/app';
+import { useAppStore } from './modules/app';
 import { useLocaleStore } from './modules/locale';
 
 export const store = createPinia();
@@ -11,8 +12,8 @@ export function initAppConfigStore() {
 
   const darkMode = appStore.getDarkMode;
 
-  // init theme mode
+  // 初始化主题
   changeDarkMode(darkMode);
-  // init locale
+  // 初始化多语言
   localeStore.initLocale();
 }

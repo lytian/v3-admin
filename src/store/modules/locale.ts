@@ -4,16 +4,7 @@ import { defineStore } from 'pinia';
 import { store } from '@/store';
 
 import { createLocalStorage, LOCALE_KEY } from '@/utils/cache';
-
-export const localeSetting: LocaleSetting = {
-  showPicker: true,
-  // Locale
-  locale: 'zh-CN',
-  // Default locale
-  fallback: 'zh-CN',
-  // available Locales
-  availableLocales: ['zh-CN', 'en'],
-};
+import { localeSetting } from '@/settings/localeSetting';
 
 const ls = createLocalStorage();
 const lsLocaleSetting = (ls.get(LOCALE_KEY) || localeSetting) as LocaleSetting;

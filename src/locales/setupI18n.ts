@@ -33,7 +33,7 @@ async function createI18nOptions(): Promise<I18nOptions> {
   };
 }
 
-// setup i18n instance with glob
+// 全局安装i18n
 export async function setupI18n(app: App) {
   const options = await createI18nOptions();
   i18n = createI18n(options);

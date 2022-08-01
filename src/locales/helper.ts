@@ -4,14 +4,17 @@ import { set } from 'lodash-es';
 
 export const loadLocalePool: LocaleType[] = [];
 
+// 设置HTML语言
 export function setHtmlPageLang(locale: LocaleType) {
   document.querySelector('html')?.setAttribute('lang', locale);
 }
 
+// 设置已加载的多语言
 export function setLoadLocalePool(cb: (loadLocalePool: LocaleType[]) => void) {
   cb(loadLocalePool);
 }
 
+// 生成i18n的message
 export function genMessage(langs: Record<string, Record<string, any>>, prefix = 'lang') {
   const obj: Recordable = {};
 

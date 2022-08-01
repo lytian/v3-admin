@@ -9,8 +9,9 @@
 import { defineComponent, unref, computed } from 'vue';
 import SunIcon from '@/assets/svg/sun.svg?component';
 import MoonIcon from '@/assets/svg/moon.svg?component';
-import { useAppStore, changeDarkMode } from '@/store/modules/app';
+import { useAppStore } from '@/store/modules/app';
 import { ThemeEnum } from '@/enums/appEnum';
+import { changeDarkMode } from '@/settings/designSetting';
 
 export default defineComponent({
   name: 'DarkModeToggle',
