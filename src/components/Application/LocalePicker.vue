@@ -46,13 +46,9 @@ const localeList: LocaleItem[] = [
 ];
 
 const props = defineProps({
-  /**
-   * Whether to display text
-   */
+  // 是否显示文字
   showText: { type: Boolean, default: false },
-  /**
-   * Whether to refresh the interface when changing
-   */
+  // 改变过后是否重新加载页面
   reload: { type: Boolean },
 });
 const showPicker = ref(false);

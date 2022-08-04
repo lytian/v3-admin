@@ -1,15 +1,15 @@
 /**
- * @description: menu type
+ * @description: 菜单类型
  */
 export enum MenuTypeEnum {
-  // left menu
+  // 左侧菜单
   SIDEBAR = 'sidebar',
-
-  MIX_SIDEBAR = 'mix-sidebar',
-  // mixin menu
-  MIX = 'mix',
-  // top menu
+  // 顶部菜单
   TOP_MENU = 'top-menu',
+  // 左侧混合菜单
+  MIX_SIDEBAR = 'mix-sidebar',
+  // 顶部混合菜单
+  MIX = 'mix',
 }
 
 // 折叠触发器位置
@@ -24,7 +24,7 @@ export enum TriggerEnum {
 
 export type Mode = 'vertical' | 'vertical-right' | 'horizontal' | 'inline';
 
-// menu mode
+// 菜单模式
 export enum MenuModeEnum {
   VERTICAL = 'vertical',
   HORIZONTAL = 'horizontal',

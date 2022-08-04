@@ -1,4 +1,10 @@
-import type { ProjectConfig } from '#/config';
+import type {
+  HeaderSetting,
+  MenuSetting,
+  MultiTabsSetting,
+  ProjectConfig,
+  TransitionSetting,
+} from '#/config';
 import type { BeforeMiniState } from '#/store';
 
 import { defineStore } from 'pinia';
@@ -8,6 +14,7 @@ import { ThemeEnum } from '@/enums/appEnum';
 import { Persistent, APP_THEME_MODE_KEY, PROJ_CFG_KEY } from '@/utils/cache';
 import { deepMerge } from '@/utils';
 import { darkMode } from '@/settings/designSetting';
+import { resetRouter } from '@/router';
 
 interface AppState {
   darkMode?: ThemeEnum;
@@ -33,14 +40,30 @@ export const useAppStore = defineStore({
     getPageLoading(): boolean {
       return this.pageLoading;
     },
+
     getDarkMode(): 'light' | 'dark' | string {
       return this.darkMode || localStorage.getItem(APP_THEME_MODE_KEY) || darkMode;
     },
+
     getBeforeMiniInfo(): BeforeMiniState {
       return this.beforeMiniInfo;
     },
+
     getProjectConfig(): ProjectConfig {
       return this.projectConfig || ({} as ProjectConfig);
+    },
+
+    getHeaderSetting(): HeaderSetting {
+      return this.getProjectConfig.headerSetting;
+    },
+    getMenuSetting(): MenuSetting {
+      return this.getProjectConfig.menuSetting;
+    },
+    getTransitionSetting(): TransitionSetting {
+      return this.getProjectConfig.transitionSetting;
+    },
+    getMultiTabsSetting(): MultiTabsSetting {
+      return this.getProjectConfig.multiTabsSetting;
     },
   },
   actions: {
@@ -60,6 +83,11 @@ export const useAppStore = defineStore({
     setProjectConfig(config: DeepPartial<ProjectConfig>): void {
       this.projectConfig = deepMerge(this.projectConfig || {}, config);
       Persistent.setLocal(PROJ_CFG_KEY, this.projectConfig);
+    },
+
+    async resetAllState() {
+      resetRouter();
+      Persistent.clearAll();
     },
 
     async setPageLoadingAction(loading: boolean): Promise<void> {
