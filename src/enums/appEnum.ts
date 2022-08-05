@@ -18,9 +18,9 @@ export enum PageEnum {
 }
 
 export enum ContentEnum {
-  // auto width
+  // 撑满
   FULL = 'full',
-  // fixed width
+  // 固定宽度
   FIXED = 'fixed',
 }
 
