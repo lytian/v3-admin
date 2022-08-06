@@ -17,9 +17,12 @@ import { darkMode } from '@/settings/designSetting';
 import { resetRouter } from '@/router';
 
 interface AppState {
+  // 暗黑模式
   darkMode?: ThemeEnum;
   // 页面加载loading
   pageLoading: boolean;
+  // 是否移动端
+  isMobile: Boolean;
   // 项目配置
   projectConfig: ProjectConfig | null;
   // 窗口最小化之前的状态
@@ -33,6 +36,7 @@ export const useAppStore = defineStore({
   state: (): AppState => ({
     darkMode: undefined,
     pageLoading: false,
+    isMobile: false,
     projectConfig: Persistent.getLocal(PROJ_CFG_KEY),
     beforeMiniInfo: {},
   }),
@@ -43,6 +47,10 @@ export const useAppStore = defineStore({
 
     getDarkMode(): 'light' | 'dark' | string {
       return this.darkMode || localStorage.getItem(APP_THEME_MODE_KEY) || darkMode;
+    },
+
+    getIsMobile(): Boolean {
+      return this.isMobile;
     },
 
     getBeforeMiniInfo(): BeforeMiniState {

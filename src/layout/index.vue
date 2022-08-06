@@ -1,17 +1,22 @@
 <template>
-  <Layout>
-    <LayoutHeader fixed />
-    <LayoutFooter />
+  <Layout class="default-layout">
+    <LayoutHeader fixed v-if="getShowFullHeaderRef" />
+    <Layout :class="[layoutClass]">
+      <LayoutFooter />
+    </Layout>
   </Layout>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
 import { Layout } from 'ant-design-vue';
 // import { createAsyncComponent } from '@/utils/factory/createAsyncComponent';
 
 import LayoutHeader from './header/index.vue';
 import LayoutFooter from './footer/index.vue';
+import { useLayout } from './useLayout';
+import { useAppStore } from '@/store/modules/app';
+import { MenuTypeEnum } from '@/enums/menuEnum';
 
 export default defineComponent({
   name: 'DefaultLayout',
@@ -21,9 +26,43 @@ export default defineComponent({
     LayoutFooter,
   },
   setup() {
-    return {};
+    const { getShowFullHeaderRef } = useLayout();
+    const appStore = useAppStore();
+
+    const layoutClass = computed(() => {
+      let cls: string[] = ['ant-layout'];
+      if (
+        appStore.getMenuSetting.show ||
+        appStore.getMenuSetting.type === MenuTypeEnum.MIX_SIDEBAR
+      ) {
+        cls.push('ant-layout-has-sider');
+      }
+      return cls;
+    });
+
+    return {
+      getShowFullHeaderRef,
+      layoutClass,
+    };
   },
 });
 </script>
 
-<style scoped></style>
+<style lang="less">
+.default-layout {
+  display: flex;
+  width: 100%;
+  min-height: 100%;
+  background-color: @content-bg;
+  flex-direction: column;
+
+  > .ant-layout {
+    min-height: 100%;
+  }
+
+  &-main {
+    width: 100%;
+    margin-left: 1px;
+  }
+}
+</style>

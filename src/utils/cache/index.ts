@@ -8,7 +8,7 @@ import { WebStorage } from './storage';
 
 export const DEFAULT_CACHE_TIME = 60 * 60 * 24 * 7;
 
-// Whether the system cache is encrypted using aes
+// 是否加密缓存内容
 export const enableStorageEncryption = !import.meta.env.DEV;
 
 export const PREFIX_KEY = (import.meta.env.VITE_APP_SHORT_NAME + '__')

@@ -3,8 +3,9 @@ import '@/style/index.less';
 
 import { createApp } from 'vue';
 import App from './App.vue';
-import router from '@/router';
-import { store, initAppConfigStore } from '@/store';
+import { setupStore, initAppConfigStore } from '@/store';
+import { router, setupRouter } from '@/router';
+import { setupRouterGuard } from '@/router/guard';
 
 import { setupI18n } from '@/locales/setupI18n';
 
@@ -15,10 +16,13 @@ if (import.meta.env.DEV) {
 
 async function main() {
   const app = createApp(App);
-  app.use(router).use(store);
+  setupStore(app);
+  initAppConfigStore();
 
   await setupI18n(app);
-  initAppConfigStore();
+
+  setupRouter(app);
+  setupRouterGuard(router);
 
   app.mount('#app');
 }

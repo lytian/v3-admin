@@ -1,12 +1,4 @@
 import { ThemeEnum } from '@/enums/appEnum';
-import { addClass, hasClass, removeClass } from '@/utils/dom';
-import { getThemeColors, generateColors } from '../../build/config/themeConfig';
-import { mixLighten, mixDarken, tinycolor } from 'vite-plugin-theme/es/colorUtils';
-import {
-  darkCssIsReady,
-  loadDarkThemeCss,
-  replaceStyleVariables,
-} from 'vite-plugin-theme/es/client';
 
 export const darkMode = ThemeEnum.LIGHT;
 
@@ -52,36 +44,3 @@ export const SIDE_BAR_BG_COLOR_LIST: string[] = [
   '#344058',
   '#383f45',
 ];
-
-// 更换深色模式
-export async function changeDarkMode(mode: string | null = 'light') {
-  const htmlRoot = document.documentElement;
-  const hasDarkClass = hasClass(htmlRoot, 'dark');
-  if (mode === 'dark') {
-    if (import.meta.env.PROD && !darkCssIsReady) {
-      await loadDarkThemeCss();
-    }
-    htmlRoot.setAttribute('data-theme', 'dark');
-    if (!hasDarkClass) {
-      addClass(htmlRoot, 'dark');
-    }
-  } else {
-    htmlRoot.setAttribute('data-theme', 'light');
-    if (hasDarkClass) {
-      removeClass(htmlRoot, 'dark');
-    }
-  }
-}
-
-// 修改主题颜色
-export async function changeThemeColor(color: string) {
-  const colors = generateColors({
-    color: color,
-    mixDarken,
-    mixLighten,
-    tinycolor,
-  });
-  return await replaceStyleVariables({
-    colorVariables: [...getThemeColors(color), ...colors],
-  });
-}
