@@ -1,5 +1,5 @@
 /**
- * Package file volume analysis
+ * 打包文件分析
  * https://github.com/btd/rollup-plugin-visualizer
  */
 import type { Plugin } from 'vite';

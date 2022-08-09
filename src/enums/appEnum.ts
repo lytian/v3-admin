@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
+export const SIDE_BAR_WIDTH = 210;
 export const SIDE_BAR_MINI_WIDTH = 48;
 export const SIDE_BAR_SHOW_TIT_MINI_WIDTH = 80;
-export const MENU_WIDTH = 210;
 
 /** 系统主题 */
 export enum ThemeEnum {
@@ -17,22 +17,21 @@ export enum PageEnum {
   BASE_HOME = '/dashboard',
 }
 
-export enum ContentEnum {
-  // 撑满
-  FULL = 'full',
-  // 固定宽度
-  FIXED = 'fixed',
-}
-
+// 设置按钮位置
 export enum SettingButtonPositionEnum {
   AUTO = 'auto',
   HEADER = 'header',
   FIXED = 'fixed',
 }
 
-export enum SessionTimeoutProcessingEnum {
-  ROUTE_JUMP,
-  PAGE_COVERAGE,
+// 标签页风格
+export enum TabTypeEnum {
+  // 卡片
+  CARD = 'card',
+  // 灵动
+  SMART = 'smart',
+  // 圆滑
+  SMOOTH = 'smooth',
 }
 
 //  Route switching animation

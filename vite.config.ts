@@ -28,7 +28,7 @@ export default defineConfig(({ command, mode }) => {
   return {
     base: VITE_PUBLIC_PATH,
     server: {
-      // host: true,
+      host: true,
       port: VITE_PORT,
       // Load proxy configuration from .env
       proxy: createProxy(VITE_PROXY),
@@ -64,6 +64,7 @@ export default defineConfig(({ command, mode }) => {
     plugins: createVitePlugins(viteEnv, isBuild),
     optimizeDeps: {
       include: [
+        '@iconify/iconify',
         'ant-design-vue/es/locale/zh_CN',
         'ant-design-vue/es/locale/en_US',
         'dayjs/locale/zh-cn',

@@ -3,7 +3,7 @@ import { useAppStore } from '@/store/modules/app';
 import { useFullContent } from './useFullContent';
 import { MenuModeEnum, MenuTypeEnum, TriggerEnum } from '@/enums/menuEnum';
 import { HeaderSetting, MenuSetting } from '#/config';
-import { SIDE_BAR_MINI_WIDTH, SIDE_BAR_SHOW_TIT_MINI_WIDTH } from '@/enums/appEnum';
+import { SIDE_BAR_WIDTH, SIDE_BAR_MINI_WIDTH, SIDE_BAR_SHOW_TIT_MINI_WIDTH } from '@/enums/appEnum';
 
 const mixSideHasChildren = ref(false);
 
@@ -51,11 +51,7 @@ export function useLayout() {
 
   // 显示Header的Trigger
   const getShowHeaderTrigger = computed(() => {
-    if (
-      !appStore.getMenuSetting.show ||
-      appStore.getMenuSetting.type === MenuTypeEnum.TOP_MENU ||
-      appStore.getMenuSetting.hidden
-    ) {
+    if (!appStore.getMenuSetting.show || appStore.getMenuSetting.type === MenuTypeEnum.TOP_MENU) {
       return false;
     }
 
@@ -84,11 +80,9 @@ export function useLayout() {
     if (appStore.getMenuSetting.type === MenuTypeEnum.MIX_SIDEBAR) {
       return appStore.getMenuSetting.collapsed && !appStore.getMenuSetting.mixSideFixed
         ? unref(getMenuMinWidth)
-        : appStore.getMenuSetting.menuWidth;
+        : SIDE_BAR_WIDTH;
     }
-    return appStore.getMenuSetting.collapsed
-      ? unref(getMenuMinWidth)
-      : appStore.getMenuSetting.menuWidth;
+    return appStore.getMenuSetting.collapsed ? unref(getMenuMinWidth) : SIDE_BAR_WIDTH;
   });
 
   // 左侧菜单最小宽度
@@ -102,7 +96,7 @@ export function useLayout() {
     const width =
       appStore.getMenuSetting.type === MenuTypeEnum.TOP_MENU ||
       !appStore.getMenuSetting.show ||
-      (appStore.getMenuSetting.split && appStore.getMenuSetting.hidden)
+      appStore.getMenuSetting.split
         ? 0
         : appStore.getMenuSetting.type === MenuTypeEnum.MIX_SIDEBAR
         ? (appStore.getMenuSetting.collapsed ? SIDE_BAR_MINI_WIDTH : SIDE_BAR_SHOW_TIT_MINI_WIDTH) +

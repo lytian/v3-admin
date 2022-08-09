@@ -1,5 +1,4 @@
 import type { Router, RouteLocationNormalized } from 'vue-router';
-import { unref } from 'vue';
 import { useAppStoreWithOut } from '@/store/modules/app';
 import { useUserStoreWithOut } from '@/store/modules/user';
 
@@ -31,7 +30,6 @@ function createPageGuard(router: Router) {
 function createPageLoadingGuard(router: Router) {
   const userStore = useUserStoreWithOut();
   const appStore = useAppStoreWithOut();
-  // const { getOpenPageLoading } = useTransitionSetting();
   router.beforeEach(async (to) => {
     if (!userStore.getToken) {
       return true;
@@ -40,21 +38,15 @@ function createPageLoadingGuard(router: Router) {
       return true;
     }
 
-    if (unref(appStore.projectConfig?.transitionSetting.openPageLoading)) {
-      appStore.setPageLoadingAction(true);
-      return true;
-    }
-
+    appStore.setPageLoadingAction(true);
     return true;
   });
   router.afterEach(async () => {
-    if (unref(appStore.projectConfig?.transitionSetting.openPageLoading)) {
-      // TODO Looking for a better way
-      // The timer simulates the loading time to prevent flashing too fast,
-      setTimeout(() => {
-        appStore.setPageLoading(false);
-      }, 220);
-    }
+    // TODO Looking for a better way
+    // The timer simulates the loading time to prevent flashing too fast,
+    setTimeout(() => {
+      appStore.setPageLoading(false);
+    }, 220);
     return true;
   });
 }

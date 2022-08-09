@@ -9,8 +9,8 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
-import { PageEnum } from '@/enums/appEnum.js';
-import { useAppStore } from '@/store/modules/app.js';
+import { PageEnum } from '@/enums/appEnum';
+import { useAppStore } from '@/store/modules/app';
 
 const props = defineProps({
   /**

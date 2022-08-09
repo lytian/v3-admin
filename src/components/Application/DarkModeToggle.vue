@@ -11,7 +11,7 @@ import SunIcon from '@/assets/svg/sun.svg?component';
 import MoonIcon from '@/assets/svg/moon.svg?component';
 import { useAppStore } from '@/store/modules/app';
 import { ThemeEnum } from '@/enums/appEnum';
-import { changeDarkMode } from '@/settings/designSetting';
+import { updateDarkTheme } from '@/settings/theme/dark';
 
 export default defineComponent({
   name: 'DarkModeToggle',
@@ -26,7 +26,7 @@ export default defineComponent({
     function toggleDarkMode() {
       const darkMode = unref(isDark) ? ThemeEnum.LIGHT : ThemeEnum.DARK;
       appStore.setDarkMode(darkMode);
-      changeDarkMode(darkMode);
+      updateDarkTheme(darkMode);
     }
     return {
       isDark,

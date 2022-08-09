@@ -1,6 +1,6 @@
 <template>
   <Layout class="default-layout">
-    <LayoutHeader fixed v-if="getShowFullHeaderRef" />
+    <LayoutHeader fixed />
     <Layout :class="[layoutClass]">
       <LayoutFooter />
     </Layout>
