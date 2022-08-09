@@ -16,12 +16,15 @@ if (import.meta.env.DEV) {
 
 async function main() {
   const app = createApp(App);
+  // 安装Store
   setupStore(app);
+  // 初始化配置
   initAppConfigStore();
-
+  // 多语言配置
   await setupI18n(app);
-
+  // 安装Router
   setupRouter(app);
+  // Route守卫
   setupRouterGuard(router);
 
   app.mount('#app');
