@@ -2,12 +2,15 @@ import { PAGE_NOT_FOUND_NAME, REDIRECT_NAME, LAYOUT } from '@/router/constant';
 import { PageEnum } from '@/enums/appEnum';
 import type { AppRouteRecordRaw } from '#/vue-router';
 
-const modules = import.meta.globEager('./modules/**/*.ts');
+const modules = import.meta.glob('./modules/**/*.ts', {
+  import: 'default',
+  eager: true,
+});
 
 const routeModuleList: AppRouteRecordRaw[] = [];
 
 Object.keys(modules).forEach((key) => {
-  const mod = modules[key].default || {};
+  const mod = modules[key] || {};
   const modList = Array.isArray(mod) ? [...mod] : [mod];
   routeModuleList.push(...modList);
 });

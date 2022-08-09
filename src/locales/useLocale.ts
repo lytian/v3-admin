@@ -34,7 +34,7 @@ export function useLocale() {
   const getShowLocalePicker = computed(() => localeStore.getShowPicker);
 
   const getAntdLocale = computed((): any => {
-    return i18n.global.getLocaleMessage(unref(getLocale))?.antdLocale ?? {};
+    return (i18n.global.getLocaleMessage(unref(getLocale)) as any)?.antdLocale ?? {};
   });
 
   // 切换多语言，并提交到配置修改
@@ -70,4 +70,5 @@ export function useLocale() {
   };
 }
 
-// export const t = (key: string) => key;
+// 此函数只是配合i18n Ally插件来进行国际化智能提示，并无实际意义（只对提示起作用），如果不需要国际化可删除
+export const t = (key: string) => key;

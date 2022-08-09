@@ -19,7 +19,7 @@ export function genMessage(langs: Record<string, Record<string, any>>, prefix = 
   const obj: Recordable = {};
 
   Object.keys(langs).forEach((key) => {
-    const langFileModule = langs[key].default;
+    const langFileModule = langs[key];
     let fileName = key.replace(`./${prefix}/`, '').replace(/^\.\//, '');
     const lastIndex = fileName.lastIndexOf('.');
     fileName = fileName.substring(0, lastIndex);
