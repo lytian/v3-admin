@@ -44,7 +44,7 @@
         :class="`layout-header-action__item`"
       />
 
-      <!-- <UserDropDown :theme="getHeaderSetting.theme" /> -->
+      <UserDropDown :theme="getHeaderSetting.theme" />
 
       <!-- <SettingDrawer v-if="getShowSetting" :class="`layout-header-action__item`" /> -->
     </div>
@@ -63,7 +63,7 @@ import LocalePicker from '@/components/Application/LocalePicker.vue';
 import { MenuModeEnum, MenuSplitTyeEnum, MenuTypeEnum } from '@/enums/menuEnum';
 import { SettingButtonPositionEnum } from '@/enums/appEnum';
 
-import { FullScreen, Notify } from './components';
+import { FullScreen, Notify, UserDropDown } from './components';
 // import { createAsyncComponent } from '@/utils/factory/createAsyncComponent';
 import { useLocale } from '@/locales/useLocale';
 import { useAppStore } from '@/store/modules/app';
@@ -80,6 +80,7 @@ export default defineComponent({
     LocalePicker,
     FullScreen,
     Notify,
+    UserDropDown,
     // AppSearch,
     // ErrorAction,
     // SettingDrawer: createAsyncComponent(() => import('@/layouts/default/setting/index.vue'), {

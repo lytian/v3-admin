@@ -1,5 +1,5 @@
 import 'uno.css';
-import '@/style/index.less';
+import '@/styles/index.less';
 
 import { createApp } from 'vue';
 import App from './App.vue';

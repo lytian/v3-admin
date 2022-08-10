@@ -2,6 +2,11 @@
   "name": "v3-admin",
   "private": true,
   "version": "0.0.1",
+  "author": {
+    "name": "Vincent",
+    "email": "619115125@qq.com",
+    "url": "https://github.com/lytian"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",

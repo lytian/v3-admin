@@ -32,7 +32,7 @@ export function configThemePlugin(isBuild: boolean): Plugin[] {
       preloadFiles: [
         path.resolve(process.cwd(), 'node_modules/ant-design-vue/dist/antd.less'),
         //path.resolve(process.cwd(), 'node_modules/ant-design-vue/dist/antd.dark.less'),
-        path.resolve(process.cwd(), 'src/style/index.less'),
+        path.resolve(process.cwd(), 'src/styles/index.less'),
       ],
       filter: (id) => (isBuild ? !id.endsWith('antd.less') : true),
       // extractCss: false,

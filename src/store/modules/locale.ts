@@ -28,15 +28,15 @@ export const useLocaleStore = defineStore({
   },
   actions: {
     /**
-     * Set up multilingual information and cache
-     * @param info multilingual info
+     * 这只多语言和缓存
+     * @param info
      */
     setLocaleInfo(info: Partial<LocaleSetting>) {
       this.localInfo = { ...this.localInfo, ...info };
       ls.set(LOCALE_KEY, this.localInfo);
     },
     /**
-     * Initialize multilingual information and load the existing configuration from the local cache
+     * 初始化多语言，并加载已存在的缓存
      */
     initLocale() {
       this.setLocaleInfo({
@@ -47,7 +47,6 @@ export const useLocaleStore = defineStore({
   },
 });
 
-// Need to be used outside the setup
 export function useLocaleStoreWithOut() {
   return useLocaleStore(store);
 }

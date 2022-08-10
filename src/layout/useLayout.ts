@@ -87,8 +87,9 @@ export function useLayout() {
 
   // 左侧菜单最小宽度
   const getMenuMinWidth = computed(() => {
-    const { collapsedShowTitle } = appStore.getMenuSetting;
-    return collapsedShowTitle ? SIDE_BAR_SHOW_TIT_MINI_WIDTH : SIDE_BAR_MINI_WIDTH;
+    return appStore.getMenuSetting.collapsedShowTitle
+      ? SIDE_BAR_SHOW_TIT_MINI_WIDTH
+      : SIDE_BAR_MINI_WIDTH;
   });
 
   // 内容宽度

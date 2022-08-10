@@ -1,10 +1,11 @@
 import type { ProjectConfig } from '#/config';
-import type { UserInfo } from '#/store';
+import type { LockScreenInfo, UserInfo } from '#/store';
 
 import { Memory } from './memory';
 import { pick } from 'lodash-es';
 import { toRaw } from 'vue';
 import { WebStorage } from './storage';
+import { RouteLocationNormalized } from 'vue-router';
 
 export const DEFAULT_CACHE_TIME = 60 * 60 * 24 * 7;
 
@@ -26,6 +27,11 @@ export const USER_INFO_KEY = 'USER__INFO__';
 // project config key
 export const PROJ_CFG_KEY = 'PROJ__CFG__KEY__';
 
+// lock info
+export const LOCK_INFO_KEY = 'LOCK__INFO__KEY__';
+
+export const MULTIPLE_TABS_KEY = 'MULTIPLE_TABS__KEY__';
+
 export const APP_THEME_MODE_KEY = '__APP__THEME__MODE__';
 
 // base global local key
@@ -37,7 +43,9 @@ export const APP_SESSION_CACHE_KEY = 'COMMON__SESSION__KEY__';
 export interface BasicStorage {
   [TOKEN_KEY]: string | number | null | undefined;
   [USER_INFO_KEY]: UserInfo;
+  [LOCK_INFO_KEY]: LockScreenInfo;
   [PROJ_CFG_KEY]: ProjectConfig;
+  [MULTIPLE_TABS_KEY]: RouteLocationNormalized[];
 }
 export type BasicKeys = keyof BasicStorage;
 
