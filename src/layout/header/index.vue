@@ -46,7 +46,7 @@
 
       <UserDropDown :theme="getHeaderSetting.theme" />
 
-      <!-- <SettingDrawer v-if="getShowSetting" :class="`layout-header-action__item`" /> -->
+      <SettingDrawer v-if="getShowSetting" :class="`layout-header-action__item`" />
     </div>
   </AHeader>
 </template>
@@ -64,7 +64,7 @@ import { MenuModeEnum, MenuSplitTyeEnum, MenuTypeEnum } from '@/enums/menuEnum';
 import { SettingButtonPositionEnum } from '@/enums/appEnum';
 
 import { FullScreen, Notify, UserDropDown } from './components';
-// import { createAsyncComponent } from '@/utils/factory/createAsyncComponent';
+import { createAsyncComponent } from '@/utils/factory/createAsyncComponent';
 import { useLocale } from '@/locales/useLocale';
 import { useAppStore } from '@/store/modules/app';
 import { useLayout } from '../useLayout';
@@ -82,10 +82,9 @@ export default defineComponent({
     Notify,
     UserDropDown,
     // AppSearch,
-    // ErrorAction,
-    // SettingDrawer: createAsyncComponent(() => import('@/layouts/default/setting/index.vue'), {
-    //   loading: true,
-    // }),
+    SettingDrawer: createAsyncComponent(() => import('@/layout/setting/index.vue'), {
+      loading: true,
+    }),
   },
   props: {
     fixed: Boolean,

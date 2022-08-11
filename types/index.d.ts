@@ -8,6 +8,12 @@ declare interface PromiseFn<T = any, R = T> {
 
 declare type RefType<T> = T | null;
 
+declare type LabelValueOptions = {
+  label: string;
+  value: any;
+  [key: string]: string | number | boolean;
+}[];
+
 declare type EmitType = (event: string, ...args: any[]) => void;
 
 declare type TargetContext = '_self' | '_blank';

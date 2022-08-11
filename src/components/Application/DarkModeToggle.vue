@@ -1,6 +1,6 @@
 <template>
-  <div :class="['theme-toggle', { 'theme-toggle--dark': isDark }]" @click="toggleDarkMode">
-    <div class="theme-toggle-inner"></div>
+  <div :class="['dark-mode-toggle', { 'dark-mode-toggle--dark': isDark }]" @click="toggleDarkMode">
+    <div class="dark-mode-toggle-inner"></div>
     <SunIcon width="16px" />
     <MoonIcon width="16px" />
   </div>
@@ -12,6 +12,7 @@ import MoonIcon from '@/assets/svg/moon.svg?component';
 import { useAppStore } from '@/store/modules/app';
 import { ThemeEnum } from '@/enums/appEnum';
 import { updateDarkTheme } from '@/settings/theme/dark';
+import { updateHeaderBgColor, updateSidebarBgColor } from '@/settings/theme/updateBackground';
 
 export default defineComponent({
   name: 'DarkModeToggle',
@@ -27,6 +28,8 @@ export default defineComponent({
       const darkMode = unref(isDark) ? ThemeEnum.LIGHT : ThemeEnum.DARK;
       appStore.setDarkMode(darkMode);
       updateDarkTheme(darkMode);
+      updateHeaderBgColor();
+      updateSidebarBgColor();
     }
     return {
       isDark,
@@ -37,12 +40,12 @@ export default defineComponent({
 </script>
 <style lang="less" scoped>
 html[data-theme='dark'] {
-  .theme-toggle {
+  .dark-mode-toggle {
     border: 1px solid rgb(196 188 188);
   }
 }
 
-.theme-toggle {
+.dark-mode-toggle {
   position: relative;
   display: inline-flex;
   width: 50px;
@@ -67,7 +70,7 @@ html[data-theme='dark'] {
   }
 
   &--dark {
-    .theme-toggle-inner {
+    .dark-mode-toggle-inner {
       transform: translateX(calc(100% + 2px));
     }
   }

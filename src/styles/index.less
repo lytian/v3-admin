@@ -3,6 +3,16 @@
 html {
   text-size-adjust: 100%;
   margin: 0;
+
+  &.color-weak {
+    filter: invert(80%);
+  }
+
+  &.gray-mode {
+    filter: grayscale(100%);
+    /* stylelint-disable-next-line function-no-unknown */
+    filter: progid:dximagetransform.microsoft.basicimage(grayscale=1);
+  }
 }
 
 body {

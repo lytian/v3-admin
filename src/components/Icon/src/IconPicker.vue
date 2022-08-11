@@ -77,6 +77,7 @@ import iconsData from '../data/icons.data';
 import { useClipboard, useDebounceFn } from '@vueuse/core';
 import { useI18n } from 'vue-i18n';
 import { ChangeEventHandler } from 'ant-design-vue/es/_util/EventInterface';
+import { oneOf } from 'vue-types';
 
 // 没有使用别名引入，是因为WebStorm当前版本还不能正确识别，会报unused警告
 const AInput = Input;
@@ -114,13 +115,7 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  mode: {
-    type: String,
-    validator(value: string) {
-      return ['svg', 'iconify'].includes(value);
-    },
-    default: 'iconify',
-  },
+  mode: oneOf<('svg' | 'iconify')[]>(['svg', 'iconify']).def('iconify'),
 });
 
 const emit = defineEmits(['change', 'update:value']);

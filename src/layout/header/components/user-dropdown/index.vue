@@ -35,6 +35,7 @@ import { useUserStore } from '@/store/modules/user';
 import avatarImg from '/@/assets/images/default-avatar.jpg';
 import { createAsyncComponent } from '@/utils/factory/createAsyncComponent';
 import { useI18n } from 'vue-i18n';
+import { oneOf } from 'vue-types';
 
 type MenuEvent = 'logout' | 'doc' | 'lock';
 
@@ -47,12 +48,7 @@ export default defineComponent({
     LockModel: createAsyncComponent(() => import('../lock/LockModal.vue')),
   },
   props: {
-    theme: {
-      type: String,
-      validator(value: string) {
-        return ['dark', 'light'].includes(value);
-      },
-    },
+    theme: oneOf(['dark', 'light']),
   },
   setup() {
     const showLockModal = ref(false);

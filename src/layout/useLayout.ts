@@ -2,7 +2,6 @@ import { computed, ref, unref } from 'vue';
 import { useAppStore } from '@/store/modules/app';
 import { useFullContent } from './useFullContent';
 import { MenuModeEnum, MenuTypeEnum, TriggerEnum } from '@/enums/menuEnum';
-import { HeaderSetting, MenuSetting } from '#/config';
 import { SIDE_BAR_WIDTH, SIDE_BAR_MINI_WIDTH, SIDE_BAR_SHOW_TIT_MINI_WIDTH } from '@/enums/appEnum';
 
 const mixSideHasChildren = ref(false);
@@ -109,16 +108,6 @@ export function useLayout() {
     return `calc(100% - ${unref(width)}px)`;
   });
 
-  // 设置Header配置
-  function setHeaderSetting(headerSetting: Partial<HeaderSetting>) {
-    appStore.setProjectConfig({ headerSetting });
-  }
-
-  // 设置Setting配置
-  function setMenuSetting(menuSetting: Partial<MenuSetting>): void {
-    appStore.setProjectConfig({ menuSetting });
-  }
-
   return {
     getShowFullHeaderRef,
     getShowInsetHeaderRef,
@@ -130,8 +119,5 @@ export function useLayout() {
     getMenuRealWidth,
     getMenuMinWidth,
     getCalcContentWidth,
-
-    setHeaderSetting,
-    setMenuSetting,
   };
 }

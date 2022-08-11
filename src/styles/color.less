@@ -1,3 +1,15 @@
+html {
+  // header
+  --header-bg-color: #394664;
+  --header-bg-hover-color: #273352;
+  --header-active-menu-bg-color: #273352;
+
+  // sider
+  --sider-dark-bg-color: #273352;
+  --sider-dark-darken-bg-color: #273352;
+  --sider-dark-lighten-bg-color: #273352;
+}
+
 @white: #fff;
 
 @content-bg: #f4f7f9;
@@ -34,22 +46,22 @@
 // ==============Header=============
 // =================================
 
-@header-dark-bg-color: #394664;
-@header-dark-bg-hover-color: #273352;
+@header-dark-bg-color: var(--header-bg-color);
+@header-dark-bg-hover-color: var(--header-bg-hover-color);
 @header-light-bg-hover-color: #f6f6f6;
 @header-light-desc-color: #7c8087;
 @header-light-bottom-border-color: #eee;
 // top-menu
-@top-menu-active-bg-color: #273352;
+@top-menu-active-bg-color: var(--header-active-menu-bg-color);
 
 // =================================
 // ==============Menu============
 // =================================
 
 // let -menu
-@sider-dark-bg-color: #001529;
-@sider-dark-darken-bg-color: #00061a;
-@sider-dark-lighten-bg-color: #0c2135;
+@sider-dark-bg-color: var(--sider-dark-bg-color);
+@sider-dark-darken-bg-color: var(--sider-dark-darken-bg-color);
+@sider-dark-lighten-bg-color: var(--sider-dark-lighten-bg-color);
 
 // trigger
 @trigger-dark-hover-bg-color: rgba(255, 255, 255, 0.2);

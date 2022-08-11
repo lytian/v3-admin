@@ -103,9 +103,18 @@ export const useAppStore = defineStore({
       this.beforeMiniInfo = state;
     },
 
+    // 设置项目配置
     setProjectConfig(config: DeepPartial<ProjectConfig>): void {
       this.projectConfig = deepMerge(this.projectConfig || {}, config);
       Persistent.setLocal(PROJ_CFG_KEY, this.projectConfig);
+    },
+    // 设置Header配置
+    setHeaderSetting(headerSetting: Partial<HeaderSetting>) {
+      this.setProjectConfig({ headerSetting });
+    },
+    // 设置Setting配置
+    setMenuSetting(menuSetting: Partial<MenuSetting>): void {
+      this.setProjectConfig({ menuSetting });
     },
 
     async resetAllState() {

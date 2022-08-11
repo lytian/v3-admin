@@ -18,29 +18,25 @@ export const APP_PRESET_COLOR_LIST: string[] = [
 // 预设header颜色
 export const HEADER_PRESET_BG_COLOR_LIST: string[] = [
   '#ffffff',
-  '#151515',
   '#009688',
+  '#e74c3c',
   '#5172DC',
   '#018ffb',
   '#409eff',
-  '#e74c3c',
+  '#151515',
   '#24292e',
   '#394664',
-  '#001529',
-  '#383f45',
 ];
 
 // 预设侧边栏颜色
 export const SIDE_BAR_BG_COLOR_LIST: string[] = [
   '#001529',
+  '#091628',
+  '#191b24',
   '#212121',
   '#273352',
-  '#ffffff',
-  '#191b24',
-  '#191a23',
-  '#304156',
-  '#001628',
   '#28333E',
-  '#344058',
+  '#304156',
   '#383f45',
+  '#ffffff',
 ];

@@ -38,6 +38,9 @@ const setting: ProjectConfig = {
   // 显示面包屑
   showBreadCrumb: true,
 
+  // 显示面包屑
+  showFooter: true,
+
   // Header配置
   headerSetting: {
     // 是否显示在顶部

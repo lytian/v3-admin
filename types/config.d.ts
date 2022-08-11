@@ -75,6 +75,8 @@ export interface ProjectConfig {
   showLogo: boolean;
   // 显示面包屑
   showBreadCrumb: boolean;
+  // 显示footer
+  showFooter: boolean;
   // header设置
   headerSetting: HeaderSetting;
   // menu设置
