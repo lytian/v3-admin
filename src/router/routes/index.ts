@@ -1,6 +1,6 @@
+import type { AppRouteRecordRaw } from '../types';
 import { PAGE_NOT_FOUND_NAME, REDIRECT_NAME, LAYOUT } from '@/router/constant';
 import { PageEnum } from '@/enums/appEnum';
-import type { AppRouteRecordRaw } from '#/vue-router';
 
 const modules = import.meta.glob('./modules/**/*.ts', {
   import: 'default',
@@ -19,6 +19,9 @@ export const RootRoute: AppRouteRecordRaw = {
   path: '/',
   name: 'Root',
   redirect: PageEnum.BASE_HOME,
+  meta: {
+    title: 'Root',
+  },
 };
 
 export const LoginRoute: AppRouteRecordRaw = {
@@ -34,11 +37,24 @@ export const LoginRoute: AppRouteRecordRaw = {
 export const NotFoundRoute: AppRouteRecordRaw = {
   path: '/:path(.*)*',
   name: PAGE_NOT_FOUND_NAME,
-  component: () => import('@/views/404.vue'),
+  component: LAYOUT,
   meta: {
+    title: 'ErrorPage',
     hideBreadcrumb: true,
     hideMenu: true,
   },
+  children: [
+    {
+      path: '/:path(.*)*',
+      name: PAGE_NOT_FOUND_NAME,
+      // component: EXCEPTION_COMPONENT,
+      meta: {
+        title: 'ErrorPage',
+        hideBreadcrumb: true,
+        hideMenu: true,
+      },
+    },
+  ],
 };
 
 export const RedirectRoute: AppRouteRecordRaw = {

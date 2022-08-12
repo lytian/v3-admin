@@ -1,5 +1,6 @@
 import { computed, defineComponent, unref } from 'vue';
-import { Divider, Drawer } from 'ant-design-vue';
+import { Divider, Drawer, Button, message as Message } from 'ant-design-vue';
+import { CopyOutlined, RedoOutlined } from '@ant-design/icons-vue';
 import DarkModeToggle from '@/components/Application/DarkModeToggle.vue';
 import TypePicker from './components/TypePicker.vue';
 import ThemeColorPicker from './components/ThemeColorPicker.vue';
@@ -17,8 +18,16 @@ import { HandlerEnum } from './handler';
 
 import { useI18n } from 'vue-i18n';
 import { useAppStore } from '@/store/modules/app';
+import { useUserStore } from '@/store/modules/user';
+import { useMultipleTabStore } from '@/store/modules/multipleTab';
 import { RouterTransitionEnum } from '@/enums/appEnum';
 import { useFullContent } from '../useFullContent';
+import { useClipboard } from '@vueuse/core';
+import defaultSetting from '@/settings/projectSetting';
+import { updateGrayMode } from '@/settings/theme/updateGrayMode';
+import { updateColorWeak } from '@/settings/theme/updateColorWeak';
+import { deepMerge } from '@/utils';
+import { ProjectConfig } from '#/config';
 
 export default defineComponent({
   name: 'SettingDrawer',
@@ -249,6 +258,44 @@ export default defineComponent({
       );
     }
 
+    function handleCopy() {
+      const { copy, copied } = useClipboard({
+        source: JSON.stringify(unref(appStore.getProjectConfig), null, 2),
+      });
+      copy();
+      copied && Message.success(t('layout.setting.operatingContent'));
+    }
+    function handleResetSetting() {
+      try {
+        const setting: ProjectConfig = deepMerge(defaultSetting, {
+          menuSetting: {
+            show: true,
+            collapsed: false,
+          },
+          headerSetting: {
+            show: true,
+          },
+        });
+        appStore.setProjectConfig(setting);
+        const { colorWeak, grayMode } = defaultSetting;
+        // updateTheme(themeColor);
+        updateColorWeak(colorWeak);
+        updateGrayMode(grayMode);
+        Message.success(t('layout.setting.resetSuccess'));
+      } catch (error: any) {
+        Message.error(error);
+      }
+    }
+    function handleClearAndRedo() {
+      localStorage.clear();
+      appStore.resetAllState();
+      const tabStore = useMultipleTabStore();
+      const userStore = useUserStore();
+      tabStore.resetState();
+      userStore.resetState();
+      location.reload();
+    }
+
     return () => (
       <Drawer
         visible={props.visible}
@@ -267,6 +314,19 @@ export default defineComponent({
         {renderFeatures()}
         <Divider>{() => t('layout.setting.interfaceDisplay')}</Divider>
         {renderContent()}
+
+        <Button type="primary" block onClick={handleCopy} class="mt-8">
+          <CopyOutlined class="mr-2" />
+          {t('layout.setting.copyBtn')}
+        </Button>
+        <Button block onClick={handleResetSetting} class="ant-btn-warning my-3">
+          <RedoOutlined class="mr-2" />
+          {t('common.resetText')}
+        </Button>
+        <Button type="primary" danger block onClick={handleClearAndRedo}>
+          <RedoOutlined class="mr-2" />
+          {t('layout.setting.clearBtn')}
+        </Button>
       </Drawer>
     );
   },

@@ -18,6 +18,8 @@ declare module 'vue-router' {
     hideMenu?: boolean;
     // 不在面包屑中显示
     hideBreadcrumb?: boolean;
+    // 隐藏子菜单
+    hideChildrenInMenu?: boolean;
     // 当前激活的菜单
     currentActiveMenu?: string;
     // 内嵌iframe地址

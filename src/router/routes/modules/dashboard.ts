@@ -1,4 +1,4 @@
-import type { AppRouteRecordRaw } from '#/vue-router';
+import type { AppRouteRecordRaw } from '@/router/types';
 import { LAYOUT } from '@/router/constant';
 
 const dashboard: AppRouteRecordRaw = {
@@ -11,11 +11,15 @@ const dashboard: AppRouteRecordRaw = {
       component: () => import('@/views/Dashboard.vue'),
       meta: {
         affix: true,
-        icon: 'appstore-outlined',
         title: '首页',
       },
     },
   ],
+  name: 'Dashboard',
+  meta: {
+    title: 'Dashboard',
+    icon: 'appstore-outlined',
+  },
 };
 
 export default dashboard;

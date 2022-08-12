@@ -31,24 +31,24 @@ export function handler(event: HandlerEnum, value: any) {
   const appStore = useAppStore();
   let config: DeepPartial<ProjectConfig>;
   switch (event) {
-    case HandlerEnum.MENU_TRIGGER:
-      config = { menuSetting: { trigger: value } };
+    case HandlerEnum.MENU_SPLIT:
+      config = { menuSetting: { split: value } };
       break;
 
-    case HandlerEnum.MENU_TOP_ALIGN:
-      config = { menuSetting: { topMenuAlign: value } };
+    case HandlerEnum.MENU_FIXED_MIX_SIDEBAR:
+      config = { menuSetting: { mixSideFixed: value } };
+      break;
+
+    case HandlerEnum.MENU_CLOSE_MIX_SIDEBAR_ON_CHANGE:
+      config = { menuSetting: { closeMixSidebarOnChange: value } };
       break;
 
     case HandlerEnum.MENU_COLLAPSED_SHOW_TITLE:
       config = { menuSetting: { collapsedShowTitle: value } };
       break;
 
-    case HandlerEnum.MENU_SPLIT:
-      config = { menuSetting: { split: value } };
-      break;
-
-    case HandlerEnum.MENU_CLOSE_MIX_SIDEBAR_ON_CHANGE:
-      config = { menuSetting: { closeMixSidebarOnChange: value } };
+    case HandlerEnum.HEADER_FIXED:
+      config = { headerSetting: { fixed: value } };
       break;
 
     case HandlerEnum.MENU_FIXED:
@@ -59,16 +59,36 @@ export function handler(event: HandlerEnum, value: any) {
       config = { menuSetting: { mixSideTrigger: value } };
       break;
 
-    case HandlerEnum.MENU_FIXED_MIX_SIDEBAR:
-      config = { menuSetting: { mixSideFixed: value } };
+    case HandlerEnum.MENU_TOP_ALIGN:
+      config = { menuSetting: { topMenuAlign: value } };
       break;
 
-    case HandlerEnum.FULL_CONTENT:
-      config = { fullContent: value };
+    case HandlerEnum.MENU_TRIGGER:
+      config = { menuSetting: { trigger: value } };
+      break;
+
+    case HandlerEnum.ROUTER_TRANSITION:
+      config = { transition: value };
       break;
 
     case HandlerEnum.SHOW_BREADCRUMB:
       config = { showBreadCrumb: value };
+      break;
+
+    case HandlerEnum.SHOW_TABS:
+      config = { showMutilTab: value };
+      break;
+
+    case HandlerEnum.SHOW_LOGO:
+      config = { showLogo: value };
+      break;
+
+    case HandlerEnum.SHOW_FOOTER:
+      config = { showFooter: value };
+      break;
+
+    case HandlerEnum.FULL_CONTENT:
+      config = { fullContent: value };
       break;
 
     case HandlerEnum.GRAY_MODE:
@@ -76,22 +96,11 @@ export function handler(event: HandlerEnum, value: any) {
       config = { grayMode: value };
       break;
 
-    case HandlerEnum.SHOW_FOOTER:
-      config = { showFooter: value };
-      break;
-
     case HandlerEnum.COLOR_WEAK:
       updateColorWeak(value);
       config = { colorWeak: value };
       break;
 
-    case HandlerEnum.SHOW_LOGO:
-      config = { showLogo: value };
-      break;
-
-    case HandlerEnum.HEADER_FIXED:
-      config = { headerSetting: { fixed: value } };
-      break;
     default:
       config = {};
       break;

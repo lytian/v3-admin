@@ -1,4 +1,5 @@
 import type { App, Plugin } from 'vue';
+import { RouteLocationNormalized, RouteRecordNormalized } from 'vue-router';
 import { isObject } from './is';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -46,4 +47,19 @@ export function openWindow(
   noreferrer && feature.push('noreferrer=yes');
 
   window.open(url, target, feature.join(','));
+}
+
+export function getRawRoute(route: RouteLocationNormalized): RouteLocationNormalized {
+  if (!route) return route;
+  const { matched, ...opt } = route;
+  return {
+    ...opt,
+    matched: (matched
+      ? matched.map((item) => ({
+          meta: item.meta,
+          name: item.name,
+          path: item.path,
+        }))
+      : undefined) as RouteRecordNormalized[],
+  };
 }

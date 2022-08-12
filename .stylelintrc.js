@@ -5,6 +5,7 @@ module.exports = {
   extends: ['stylelint-config-standard', 'stylelint-config-prettier'],
   rules: {
     'selector-class-pattern': null,
+    'selector-not-notation': null,
     'selector-pseudo-class-no-unknown': [
       true,
       {
@@ -15,6 +16,12 @@ module.exports = {
       true,
       {
         ignorePseudoElements: ['v-deep'],
+      },
+    ],
+    'function-no-unknown': [
+      true,
+      {
+        ignoreFunctions: ['lighten', 'darken', 'fade'],
       },
     ],
     'at-rule-no-unknown': [
@@ -77,12 +84,6 @@ module.exports = {
     {
       files: ['*.vue', '**/*.vue'],
       rules: {
-        'function-no-unknown': [
-          true,
-          {
-            ignoreFunctions: ['lighten', 'darken'],
-          },
-        ],
         'selector-pseudo-class-no-unknown': [
           true,
           {
