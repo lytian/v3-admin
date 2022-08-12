@@ -1,8 +1,13 @@
 <template>
   <Layout class="default-layout">
-    <LayoutHeader fixed />
+    <LayoutHeader fixed v-if="getShowFullHeaderRef" />
     <Layout :class="[layoutClass]">
-      <LayoutFooter />
+      <LayoutSideBar v-if="getShowSidebar || getIsMobile" />
+      <Layout class="default-layout-main">
+        <!-- <LayoutMultipleHeader />
+        <LayoutContent /> -->
+        <LayoutFooter v-if="getShowFooter" />
+      </Layout>
     </Layout>
   </Layout>
 </template>
@@ -14,6 +19,8 @@ import { Layout } from 'ant-design-vue';
 
 import LayoutHeader from './header/index.vue';
 import LayoutFooter from './footer/index.vue';
+import LayoutSideBar from './sider/index.vue';
+
 import { useLayout } from './useLayout';
 import { useAppStore } from '@/store/modules/app';
 import { MenuTypeEnum } from '@/enums/menuEnum';
@@ -23,12 +30,16 @@ export default defineComponent({
   components: {
     Layout,
     LayoutHeader,
+    LayoutSideBar,
     LayoutFooter,
   },
   setup() {
     const { getShowFullHeaderRef } = useLayout();
     const appStore = useAppStore();
 
+    const getShowFooter = computed(() => appStore.getProjectConfig.showFooter);
+    const getIsMobile = computed(() => appStore.getIsMobile);
+    const { getShowSidebar } = useLayout();
     const layoutClass = computed(() => {
       let cls: string[] = ['ant-layout'];
       if (
@@ -42,6 +53,9 @@ export default defineComponent({
 
     return {
       getShowFullHeaderRef,
+      getShowFooter,
+      getIsMobile,
+      getShowSidebar,
       layoutClass,
     };
   },
